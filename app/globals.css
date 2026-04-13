@@ -2,30 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --orange: #FF6B35;
-  --navy: #0F1624;
-  --navy-mid: #1B2B4B;
-  --teal: #00C2CB;
-}
-
 html {
   scroll-behavior: smooth;
 }
 
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.85); }
-}
-
-@keyframes flow-right {
-  0% { transform: translateX(-100%); opacity: 0; }
-  50% { opacity: 1; }
-  100% { transform: translateX(100%); opacity: 0; }
+  50% { opacity: 0.4; transform: scale(0.8); }
 }
 
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -34,21 +21,6 @@ html {
 }
 
 .animate-fade-up {
-  animation: fade-up 0.6s ease-out forwards;
-}
-
-.agent-card:hover {
-  transform: translateY(-2px);
-  transition: transform 0.2s ease;
-}
-
-.gradient-border {
-  background: linear-gradient(135deg, #FF6B35, #1B2B4B, #00C2CB);
-  padding: 1px;
-  border-radius: 12px;
-}
-
-.gradient-border-inner {
-  background: #1B2B4B;
-  border-radius: 11px;
+  animation: fade-up 0.5s ease-out forwards;
+  opacity: 0;
 }

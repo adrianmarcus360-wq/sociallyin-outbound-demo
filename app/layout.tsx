@@ -5,23 +5,16 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "SociallyIn — AI Outbound Intelligence System",
-  description:
-    "8-agent AI pipeline: ICP scoring, account mapping, cross-platform intel, hyper-personalized sequences, and HubSpot Enterprise sync.",
-  openGraph: {
-    title: "SociallyIn — AI Outbound Intelligence System",
-    description: "Enterprise-grade AI outbound built on top of SociallyIn's HubSpot infrastructure.",
-  },
+  title: "SociallyIn — AI Outbound Intelligence",
+  description: "8-agent AI pipeline for Fortune 1000 outbound: ICP scoring, account mapping, cross-platform intel, hyper-personalized sequences, HubSpot sync.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.className} bg-[#0F1624] text-white antialiased`}>
+    <html lang="en">
+      <body className={`${inter.className} bg-gray-50 text-gray-900 antialiased`}>
         {children}
       </body>
     </html>
