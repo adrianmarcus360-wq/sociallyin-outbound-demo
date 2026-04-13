@@ -213,133 +213,807 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 text-gray-700">
-                                <tr class="hover:bg-gray-50 transition-colors group">
-                                    <td class="px-6 py-4"><input type="checkbox" class="rounded border-gray-300 text-brand focus:ring-brand w-4 h-4 cursor-pointer"></td>
-                                    <td class="px-6 py-4 font-medium text-gray-900 flex items-center gap-2">
-                                        <div class="w-6 h-6 rounded bg-gray-100 flex items-center justify-center border border-gray-200"><svg class="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></div>
-                                        Scout
-                                    </td>
-                                    <td class="px-6 py-4">ICP Scoring &amp; Discovery</td>
+                                <tr class="hover:bg-gray-50 transition-colors cursor-pointer" onclick="toggleProfile('profile-0')">
+                                    <td class="px-6 py-4"><input type="checkbox" class="rounded border-gray-300 text-brand focus:ring-brand w-4 h-4 cursor-pointer" onclick="event.stopPropagation()"></td>
                                     <td class="px-6 py-4">
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border border-green-200 bg-green-50 text-green-700">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> Active
-                                        </span>
+                                        <div class="font-medium text-gray-900">Marriott International</div>
+                                        <div class="text-xs text-gray-400 mt-0.5">$23.7B revenue</div>
                                     </td>
-                                    <td class="px-6 py-4 text-right font-medium">47</td>
-                                    <td class="px-6 py-4 text-right text-gray-500">0</td>
-                                    <td class="px-6 py-4 text-gray-500 whitespace-normal min-w-[320px] leading-snug">Scores every company 0–100, assigns Tier 1/2/3, pulls Fortune 1000, Inc. 5000, Series B+ targets</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-8 h-8 rounded-full bg-brand text-white flex items-center justify-center text-xs font-bold flex-shrink-0">TE</div>
+                                            <div>
+                                                <div class="font-medium text-gray-800">Tina Edmundson</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-500 text-sm">Chief Brand Officer</td>
+                                    <td class="px-6 py-4"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-orange-50 text-orange-700 border border-orange-200">Tier 1</span></td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                                                <div class="h-full bg-brand rounded-full" style="width:96%"></div>
+                                            </div>
+                                            <span class="font-bold text-gray-800 text-sm">96</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4"><span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-red-50 text-red-700 border border-red-200 whitespace-nowrap">🔥 Hot Reply</span></td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center justify-between gap-2">
+                                            <span class="text-sm text-gray-600">Email</span>
+                                            <svg class="w-4 h-4 text-gray-400 transition-transform" id="chevron-profile-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                        </div>
+                                    </td>
                                 </tr>
-                                <tr class="hover:bg-gray-50 transition-colors group">
-                                    <td class="px-6 py-4"><input type="checkbox" class="rounded border-gray-300 text-brand focus:ring-brand w-4 h-4 cursor-pointer"></td>
-                                    <td class="px-6 py-4 font-medium text-gray-900 flex items-center gap-2">
-                                        <div class="w-6 h-6 rounded bg-gray-100 flex items-center justify-center border border-gray-200"><svg class="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path></svg></div>
-                                        Mapper
+                                <tr id="profile-0" class="hidden bg-gray-50 border-b border-gray-200">
+                                    <td colspan="8" class="px-6 py-6">
+                                        <div class="grid grid-cols-3 gap-6">
+
+                                            <!-- Account Tree -->
+                                            <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                                                <div class="flex items-center gap-2 mb-3">
+                                                    <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                                    <span class="text-sm font-semibold text-gray-800">Account Tree — Marriott International</span>
+                                                    <span class="ml-auto text-xs text-gray-400">4 contacts mapped</span>
+                                                </div>
+                                                <table class="w-full text-left">
+                                                    <thead>
+                                                        <tr class="text-[10px] uppercase tracking-wide text-gray-400 border-b border-gray-100">
+                                                            <th class="pb-1.5 px-4">Name</th>
+                                                            <th class="pb-1.5 px-4">Title</th>
+                                                            <th class="pb-1.5 px-4">Role</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="divide-y divide-gray-50">
+                                                        
+                                        <tr class="">
+                                            <td class="px-4 py-2.5 font-medium text-gray-900 text-sm">
+                                                David Doctorow 
+                                            </td>
+                                            <td class="px-4 py-2.5 text-sm text-gray-500">Chief Marketing Officer</td>
+                                            <td class="px-4 py-2.5"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-red-50 text-red-700 border-red-200">Decision Maker</span></td>
+                                        </tr>
+                                        <tr class="bg-orange-50">
+                                            <td class="px-4 py-2.5 font-medium text-gray-900 text-sm">
+                                                Tina Edmundson <span class='ml-1 text-[10px] font-semibold text-orange-600 bg-orange-100 px-1.5 py-0.5 rounded'>PRIMARY</span>
+                                            </td>
+                                            <td class="px-4 py-2.5 text-sm text-gray-500">Chief Brand Officer</td>
+                                            <td class="px-4 py-2.5"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-green-50 text-green-700 border-green-200">Champion</span></td>
+                                        </tr>
+                                        <tr class="">
+                                            <td class="px-4 py-2.5 font-medium text-gray-900 text-sm">
+                                                Brian King 
+                                            </td>
+                                            <td class="px-4 py-2.5 text-sm text-gray-500">President — Global Brands</td>
+                                            <td class="px-4 py-2.5"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-blue-50 text-blue-700 border-blue-200">Influencer</span></td>
+                                        </tr>
+                                        <tr class="">
+                                            <td class="px-4 py-2.5 font-medium text-gray-900 text-sm">
+                                                Julie Hsu 
+                                            </td>
+                                            <td class="px-4 py-2.5 text-sm text-gray-500">VP of Social Media</td>
+                                            <td class="px-4 py-2.5"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-purple-50 text-purple-700 border-purple-200">Budget Holder</span></td>
+                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <!-- Intel / Personal Signals -->
+                                            <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                                                <div class="flex items-center gap-2 mb-3">
+                                                    <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                                                    <span class="text-sm font-semibold text-gray-800">Intel — Personal Signals</span>
+                                                </div>
+                                                <ul class="space-y-2">
+                                                    
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Posted on LinkedIn 3 days ago: <em>"Great content is the only loyalty program that actually works."</em> — 847 likes, 62 comments</span>
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Harvard Business School MBA · 18-year Marriott veteran · speaks at ANA & Advertising Week</span>
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Publicly credited for Marriott's Content Studio (brand journalism, travel storytelling)</span>
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Instagram: avid traveler, posts destination photography — no brand-speak, all personal</span>
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Recent internal win: oversaw Marriott Bonvoy's social rebrand (+3.2M followers in 12 months)</span>
+                                        </li>
+                                                </ul>
+                                                <div class="mt-4 pt-3 border-t border-gray-100">
+                                                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Wordsmith Hook</p>
+                                                    <p class="text-sm text-gray-700 italic leading-relaxed">"Tina — your LinkedIn post about content as a loyalty program is exactly the thesis we build systems around. We helped a hospitality brand similar to Marriott drive +3,000% impressions in their first 90 days using AI-personalized social sequences — would love 15 minutes to show you what that looks like at Bonvoy's scale."</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- Email Preview -->
+                                            <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                                                <div class="flex items-center gap-2 mb-3">
+                                                    <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                                    <span class="text-sm font-semibold text-gray-800">Wordsmith — Email Draft</span>
+                                                    <span class="ml-auto text-[10px] font-semibold text-green-700 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">Ready to Send</span>
+                                                </div>
+                                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1.5">Subject Lines (3 variants)</p>
+                                                <div class="mb-3">
+                                                    
+                                    <div class="flex items-center gap-2 py-1.5 border-b border-gray-50 last:border-0">
+                                        <span class="text-orange-500 text-sm">★</span>
+                                        <span class="text-sm text-gray-700">The content-as-loyalty play you posted about (+ what we built for Carnival)</span>
+                                        <span class='ml-auto text-[10px] font-semibold text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded'>BEST</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 py-1.5 border-b border-gray-50 last:border-0">
+                                        <span class="text-gray-300 text-sm">☆</span>
+                                        <span class="text-sm text-gray-700">How we'd approach Bonvoy's social in Q3</span>
+                                        
+                                    </div>
+                                    <div class="flex items-center gap-2 py-1.5 border-b border-gray-50 last:border-0">
+                                        <span class="text-gray-300 text-sm">☆</span>
+                                        <span class="text-sm text-gray-700">Marriott content team → 15 min?</span>
+                                        
+                                    </div>
+                                                </div>
+                                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1.5">Email Body</p>
+                                                <div class="bg-gray-50 rounded-lg p-3 text-sm text-gray-700 leading-relaxed border border-gray-100 font-mono text-xs max-h-48 overflow-y-auto">
+                                                    <p class='mb-1'>Hi Tina,</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>Your post on Monday stopped me mid-scroll — "great content is the only loyalty program that actually works." We literally built our methodology around that thesis.</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>We just wrapped a program for a hospitality brand where AI-personalized social sequences drove a 3,000%+ impressions lift in the first quarter. Personalized by property, by audience segment, by channel.</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>I think there's a version of this built specifically for Bonvoy's scale — 30+ brands, 8,000+ properties, one voice problem.</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>Worth 15 minutes this week?</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>— [Name]</p><p class='mb-1'>SociallyIn</p>
+                                                </div>
+                                                <div class="mt-3 flex gap-2">
+                                                    <button class="flex-1 py-1.5 bg-brand text-white text-xs font-medium rounded-lg hover:bg-brand-600 transition-colors">Approve &amp; Send</button>
+                                                    <button class="flex-1 py-1.5 bg-white border border-gray-200 text-gray-600 text-xs font-medium rounded-lg hover:bg-gray-50 transition-colors">Edit Draft</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </td>
-                                    <td class="px-6 py-4">Account Tree Builder</td>
-                                    <td class="px-6 py-4">
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border border-green-200 bg-green-50 text-green-700">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> Active
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 text-right font-medium">183</td>
-                                    <td class="px-6 py-4 text-right text-gray-500">12</td>
-                                    <td class="px-6 py-4 text-gray-500 whitespace-normal min-w-[320px] leading-snug">Identifies 3–7 contacts per company. Tags Decision Maker, Champion, Influencer, Budget Holder</td>
                                 </tr>
-                                <tr class="hover:bg-gray-50 transition-colors group">
-                                    <td class="px-6 py-4"><input type="checkbox" class="rounded border-gray-300 text-brand focus:ring-brand w-4 h-4 cursor-pointer"></td>
-                                    <td class="px-6 py-4 font-medium text-gray-900 flex items-center gap-2">
-                                        <div class="w-6 h-6 rounded bg-gray-100 flex items-center justify-center border border-gray-200"><svg class="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg></div>
-                                        Intel
-                                    </td>
-                                    <td class="px-6 py-4">Cross-Platform Research</td>
+                                <tr class="hover:bg-gray-50 transition-colors cursor-pointer" onclick="toggleProfile('profile-1')">
+                                    <td class="px-6 py-4"><input type="checkbox" class="rounded border-gray-300 text-brand focus:ring-brand w-4 h-4 cursor-pointer" onclick="event.stopPropagation()"></td>
                                     <td class="px-6 py-4">
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border border-blue-200 bg-blue-50 text-blue-700">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Running
-                                        </span>
+                                        <div class="font-medium text-gray-900">Hilton Hotels & Resorts</div>
+                                        <div class="text-xs text-gray-400 mt-0.5">$10.2B revenue</div>
                                     </td>
-                                    <td class="px-6 py-4 text-right font-medium">156</td>
-                                    <td class="px-6 py-4 text-right text-gray-500">27</td>
-                                    <td class="px-6 py-4 text-gray-500 whitespace-normal min-w-[320px] leading-snug">Parallel LinkedIn, Twitter/X, Instagram research. Surfaces personal signals — hobbies, causes, career wins</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-8 h-8 rounded-full bg-brand text-white flex items-center justify-center text-xs font-bold flex-shrink-0">MW</div>
+                                            <div>
+                                                <div class="font-medium text-gray-800">Mark Weinstein</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-500 text-sm">Chief Marketing & Loyalty Officer</td>
+                                    <td class="px-6 py-4"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-orange-50 text-orange-700 border border-orange-200">Tier 1</span></td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                                                <div class="h-full bg-brand rounded-full" style="width:92%"></div>
+                                            </div>
+                                            <span class="font-bold text-gray-800 text-sm">92</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4"><span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-200 whitespace-nowrap">✅ Meeting Set</span></td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center justify-between gap-2">
+                                            <span class="text-sm text-gray-600">LinkedIn</span>
+                                            <svg class="w-4 h-4 text-gray-400 transition-transform" id="chevron-profile-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                        </div>
+                                    </td>
                                 </tr>
-                                <tr class="hover:bg-gray-50 transition-colors group">
-                                    <td class="px-6 py-4"><input type="checkbox" class="rounded border-gray-300 text-brand focus:ring-brand w-4 h-4 cursor-pointer"></td>
-                                    <td class="px-6 py-4 font-medium text-gray-900 flex items-center gap-2">
-                                        <div class="w-6 h-6 rounded bg-gray-100 flex items-center justify-center border border-gray-200"><svg class="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg></div>
-                                        Profiler
+                                <tr id="profile-1" class="hidden bg-gray-50 border-b border-gray-200">
+                                    <td colspan="8" class="px-6 py-6">
+                                        <div class="grid grid-cols-3 gap-6">
+
+                                            <!-- Account Tree -->
+                                            <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                                                <div class="flex items-center gap-2 mb-3">
+                                                    <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                                    <span class="text-sm font-semibold text-gray-800">Account Tree — Hilton Hotels & Resorts</span>
+                                                    <span class="ml-auto text-xs text-gray-400">4 contacts mapped</span>
+                                                </div>
+                                                <table class="w-full text-left">
+                                                    <thead>
+                                                        <tr class="text-[10px] uppercase tracking-wide text-gray-400 border-b border-gray-100">
+                                                            <th class="pb-1.5 px-4">Name</th>
+                                                            <th class="pb-1.5 px-4">Title</th>
+                                                            <th class="pb-1.5 px-4">Role</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="divide-y divide-gray-50">
+                                                        
+                                        <tr class="bg-orange-50">
+                                            <td class="px-4 py-2.5 font-medium text-gray-900 text-sm">
+                                                Mark Weinstein <span class='ml-1 text-[10px] font-semibold text-orange-600 bg-orange-100 px-1.5 py-0.5 rounded'>PRIMARY</span>
+                                            </td>
+                                            <td class="px-4 py-2.5 text-sm text-gray-500">Chief Marketing & Loyalty Officer</td>
+                                            <td class="px-4 py-2.5"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-red-50 text-red-700 border-red-200">Decision Maker</span></td>
+                                        </tr>
+                                        <tr class="">
+                                            <td class="px-4 py-2.5 font-medium text-gray-900 text-sm">
+                                                Chris Silcock 
+                                            </td>
+                                            <td class="px-4 py-2.5 text-sm text-gray-500">President — Commercial Services</td>
+                                            <td class="px-4 py-2.5"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-blue-50 text-blue-700 border-blue-200">Influencer</span></td>
+                                        </tr>
+                                        <tr class="">
+                                            <td class="px-4 py-2.5 font-medium text-gray-900 text-sm">
+                                                Dana Hamilton 
+                                            </td>
+                                            <td class="px-4 py-2.5 text-sm text-gray-500">SVP, Enterprise Marketing</td>
+                                            <td class="px-4 py-2.5"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-green-50 text-green-700 border-green-200">Champion</span></td>
+                                        </tr>
+                                        <tr class="">
+                                            <td class="px-4 py-2.5 font-medium text-gray-900 text-sm">
+                                                James Caldwell 
+                                            </td>
+                                            <td class="px-4 py-2.5 text-sm text-gray-500">VP of Social & Digital</td>
+                                            <td class="px-4 py-2.5"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-purple-50 text-purple-700 border-purple-200">Budget Holder</span></td>
+                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <!-- Intel / Personal Signals -->
+                                            <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                                                <div class="flex items-center gap-2 mb-3">
+                                                    <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                                                    <span class="text-sm font-semibold text-gray-800">Intel — Personal Signals</span>
+                                                </div>
+                                                <ul class="space-y-2">
+                                                    
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Keynote speaker at Loyalty360 Conference — talked about <em>"social proof as the new loyalty currency"</em></span>
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Yale MBA · 10+ years at Hilton · frequent AdAge & Skift contributor</span>
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Recent article: <em>"Why Hilton Honors is investing in creator partnerships over paid ads"</em></span>
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>LinkedIn: posts every Monday about hospitality brand trends — high engagement (500–1,200 likes)</span>
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Known internally for championing Hilton's TikTok-first strategy in 2023</span>
+                                        </li>
+                                                </ul>
+                                                <div class="mt-4 pt-3 border-t border-gray-100">
+                                                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Wordsmith Hook</p>
+                                                    <p class="text-sm text-gray-700 italic leading-relaxed">"Mark — your Loyalty360 talk on social proof as a loyalty signal was spot-on. We build AI-powered outbound systems that turn that exact signal into pipeline — creator engagement mapped to booking intent. Just wrapped something similar for a Tier 1 hotel group and would love to show you the playbook."</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- Email Preview -->
+                                            <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                                                <div class="flex items-center gap-2 mb-3">
+                                                    <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                                    <span class="text-sm font-semibold text-gray-800">Wordsmith — Email Draft</span>
+                                                    <span class="ml-auto text-[10px] font-semibold text-green-700 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">Ready to Send</span>
+                                                </div>
+                                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1.5">Subject Lines (3 variants)</p>
+                                                <div class="mb-3">
+                                                    
+                                    <div class="flex items-center gap-2 py-1.5 border-b border-gray-50 last:border-0">
+                                        <span class="text-orange-500 text-sm">★</span>
+                                        <span class="text-sm text-gray-700">Your Loyalty360 talk → the system we built around it</span>
+                                        <span class='ml-auto text-[10px] font-semibold text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded'>BEST</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 py-1.5 border-b border-gray-50 last:border-0">
+                                        <span class="text-gray-300 text-sm">☆</span>
+                                        <span class="text-sm text-gray-700">Social proof → pipeline (what we built for a Tier 1 hotel brand)</span>
+                                        
+                                    </div>
+                                    <div class="flex items-center gap-2 py-1.5 border-b border-gray-50 last:border-0">
+                                        <span class="text-gray-300 text-sm">☆</span>
+                                        <span class="text-sm text-gray-700">Hilton Honors social play — quick idea</span>
+                                        
+                                    </div>
+                                                </div>
+                                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1.5">Email Body</p>
+                                                <div class="bg-gray-50 rounded-lg p-3 text-sm text-gray-700 leading-relaxed border border-gray-100 font-mono text-xs max-h-48 overflow-y-auto">
+                                                    <p class='mb-1'>Hi Mark,</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>Caught your Loyalty360 keynote — the social proof as loyalty currency framing is something we've operationalized into a full outbound system.</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>Here's what I mean: we built an AI pipeline that maps creator engagement + social signal data to buying intent, then sequences personalized outreach to hospitality brand marketing leaders at scale.</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>We ran this for a comparable hotel group and the results were strong — I can share specifics on a quick call.</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>15 minutes this week?</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>— [Name]</p><p class='mb-1'>SociallyIn</p>
+                                                </div>
+                                                <div class="mt-3 flex gap-2">
+                                                    <button class="flex-1 py-1.5 bg-brand text-white text-xs font-medium rounded-lg hover:bg-brand-600 transition-colors">Approve &amp; Send</button>
+                                                    <button class="flex-1 py-1.5 bg-white border border-gray-200 text-gray-600 text-xs font-medium rounded-lg hover:bg-gray-50 transition-colors">Edit Draft</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </td>
-                                    <td class="px-6 py-4">Profile Card Generator</td>
-                                    <td class="px-6 py-4">
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border border-green-200 bg-green-50 text-green-700">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> Active
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 text-right font-medium">134</td>
-                                    <td class="px-6 py-4 text-right text-gray-500">22</td>
-                                    <td class="px-6 py-4 text-gray-500 whitespace-normal min-w-[320px] leading-snug">Synthesizes Intel into Profile Cards. Selects best SociallyIn case study per industry</td>
                                 </tr>
-                                <tr class="hover:bg-gray-50 transition-colors group">
-                                    <td class="px-6 py-4"><input type="checkbox" class="rounded border-gray-300 text-brand focus:ring-brand w-4 h-4 cursor-pointer"></td>
-                                    <td class="px-6 py-4 font-medium text-gray-900 flex items-center gap-2">
-                                        <div class="w-6 h-6 rounded bg-gray-100 flex items-center justify-center border border-gray-200"><svg class="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg></div>
-                                        Wordsmith
-                                    </td>
-                                    <td class="px-6 py-4">Message Personalization</td>
+                                <tr class="hover:bg-gray-50 transition-colors cursor-pointer" onclick="toggleProfile('profile-2')">
+                                    <td class="px-6 py-4"><input type="checkbox" class="rounded border-gray-300 text-brand focus:ring-brand w-4 h-4 cursor-pointer" onclick="event.stopPropagation()"></td>
                                     <td class="px-6 py-4">
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border border-amber-200 bg-amber-50 text-amber-700">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Idle
-                                        </span>
+                                        <div class="font-medium text-gray-900">Target Corporation</div>
+                                        <div class="text-xs text-gray-400 mt-0.5">$109.1B revenue</div>
                                     </td>
-                                    <td class="px-6 py-4 text-right font-medium">89</td>
-                                    <td class="px-6 py-4 text-right text-gray-500">45</td>
-                                    <td class="px-6 py-4 text-gray-500 whitespace-normal min-w-[320px] leading-snug">Generates custom first lines, 3 subject variants, LinkedIn messages, social DM openers, gift recs</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-8 h-8 rounded-full bg-brand text-white flex items-center justify-center text-xs font-bold flex-shrink-0">CS</div>
+                                            <div>
+                                                <div class="font-medium text-gray-800">Cara Sylvester</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-500 text-sm">EVP & Chief Guest Experience Officer</td>
+                                    <td class="px-6 py-4"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-orange-50 text-orange-700 border border-orange-200">Tier 1</span></td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                                                <div class="h-full bg-brand rounded-full" style="width:89%"></div>
+                                            </div>
+                                            <span class="font-bold text-gray-800 text-sm">89</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4"><span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200 whitespace-nowrap">♻️ Warm Reply</span></td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center justify-between gap-2">
+                                            <span class="text-sm text-gray-600">Email</span>
+                                            <svg class="w-4 h-4 text-gray-400 transition-transform" id="chevron-profile-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                        </div>
+                                    </td>
                                 </tr>
-                                <tr class="hover:bg-gray-50 transition-colors group">
-                                    <td class="px-6 py-4"><input type="checkbox" class="rounded border-gray-300 text-brand focus:ring-brand w-4 h-4 cursor-pointer"></td>
-                                    <td class="px-6 py-4 font-medium text-gray-900 flex items-center gap-2">
-                                        <div class="w-6 h-6 rounded bg-gray-100 flex items-center justify-center border border-gray-200"><svg class="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div>
-                                        Conductor
+                                <tr id="profile-2" class="hidden bg-gray-50 border-b border-gray-200">
+                                    <td colspan="8" class="px-6 py-6">
+                                        <div class="grid grid-cols-3 gap-6">
+
+                                            <!-- Account Tree -->
+                                            <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                                                <div class="flex items-center gap-2 mb-3">
+                                                    <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                                    <span class="text-sm font-semibold text-gray-800">Account Tree — Target Corporation</span>
+                                                    <span class="ml-auto text-xs text-gray-400">5 contacts mapped</span>
+                                                </div>
+                                                <table class="w-full text-left">
+                                                    <thead>
+                                                        <tr class="text-[10px] uppercase tracking-wide text-gray-400 border-b border-gray-100">
+                                                            <th class="pb-1.5 px-4">Name</th>
+                                                            <th class="pb-1.5 px-4">Title</th>
+                                                            <th class="pb-1.5 px-4">Role</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="divide-y divide-gray-50">
+                                                        
+                                        <tr class="">
+                                            <td class="px-4 py-2.5 font-medium text-gray-900 text-sm">
+                                                Brian Cornell 
+                                            </td>
+                                            <td class="px-4 py-2.5 text-sm text-gray-500">Chairman & CEO</td>
+                                            <td class="px-4 py-2.5"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-blue-50 text-blue-700 border-blue-200">Influencer</span></td>
+                                        </tr>
+                                        <tr class="bg-orange-50">
+                                            <td class="px-4 py-2.5 font-medium text-gray-900 text-sm">
+                                                Cara Sylvester <span class='ml-1 text-[10px] font-semibold text-orange-600 bg-orange-100 px-1.5 py-0.5 rounded'>PRIMARY</span>
+                                            </td>
+                                            <td class="px-4 py-2.5 text-sm text-gray-500">EVP, Chief Guest Experience Officer</td>
+                                            <td class="px-4 py-2.5"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-red-50 text-red-700 border-red-200">Decision Maker</span></td>
+                                        </tr>
+                                        <tr class="">
+                                            <td class="px-4 py-2.5 font-medium text-gray-900 text-sm">
+                                                Rick Gomez 
+                                            </td>
+                                            <td class="px-4 py-2.5 text-sm text-gray-500">EVP, Chief Food & Beverage Officer</td>
+                                            <td class="px-4 py-2.5"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-blue-50 text-blue-700 border-blue-200">Influencer</span></td>
+                                        </tr>
+                                        <tr class="">
+                                            <td class="px-4 py-2.5 font-medium text-gray-900 text-sm">
+                                                Prat Vemana 
+                                            </td>
+                                            <td class="px-4 py-2.5 text-sm text-gray-500">Chief Digital & Product Officer</td>
+                                            <td class="px-4 py-2.5"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-purple-50 text-purple-700 border-purple-200">Budget Holder</span></td>
+                                        </tr>
+                                        <tr class="">
+                                            <td class="px-4 py-2.5 font-medium text-gray-900 text-sm">
+                                                Michelle Wlazlo 
+                                            </td>
+                                            <td class="px-4 py-2.5 text-sm text-gray-500">EVP, Chief Merchandising Officer</td>
+                                            <td class="px-4 py-2.5"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-green-50 text-green-700 border-green-200">Champion</span></td>
+                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <!-- Intel / Personal Signals -->
+                                            <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                                                <div class="flex items-center gap-2 mb-3">
+                                                    <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                                                    <span class="text-sm font-semibold text-gray-800">Intel — Personal Signals</span>
+                                                </div>
+                                                <ul class="space-y-2">
+                                                    
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Published LinkedIn article: <em>"Why we call them guests, not customers — and why it changes everything"</em> — 2.1K likes</span>
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Northwestern Kellogg MBA · 15+ year Target veteran · promoted to EVP in 2022</span>
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Championed Target Circle's social-first launch strategy (43M members)</span>
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Known for Target's DE&I content initiatives and brand authenticity push</span>
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Instagram: family-oriented, Minnesota-based, posts about community events — very approachable</span>
+                                        </li>
+                                                </ul>
+                                                <div class="mt-4 pt-3 border-t border-gray-100">
+                                                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Wordsmith Hook</p>
+                                                    <p class="text-sm text-gray-700 italic leading-relaxed">"Cara — the 'guests not customers' framework you wrote about is something we build social systems around — every touchpoint should feel personal, not transactional. We helped a major retail brand build AI-personalized social sequences that drove that exact guest-first experience at scale. Would love to show you how it maps to Target Circle's next growth phase."</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- Email Preview -->
+                                            <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                                                <div class="flex items-center gap-2 mb-3">
+                                                    <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                                    <span class="text-sm font-semibold text-gray-800">Wordsmith — Email Draft</span>
+                                                    <span class="ml-auto text-[10px] font-semibold text-green-700 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">Ready to Send</span>
+                                                </div>
+                                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1.5">Subject Lines (3 variants)</p>
+                                                <div class="mb-3">
+                                                    
+                                    <div class="flex items-center gap-2 py-1.5 border-b border-gray-50 last:border-0">
+                                        <span class="text-orange-500 text-sm">★</span>
+                                        <span class="text-sm text-gray-700">The 'guests not customers' framework → social at scale</span>
+                                        <span class='ml-auto text-[10px] font-semibold text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded'>BEST</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 py-1.5 border-b border-gray-50 last:border-0">
+                                        <span class="text-gray-300 text-sm">☆</span>
+                                        <span class="text-sm text-gray-700">Target Circle social → what the next chapter looks like</span>
+                                        
+                                    </div>
+                                    <div class="flex items-center gap-2 py-1.5 border-b border-gray-50 last:border-0">
+                                        <span class="text-gray-300 text-sm">☆</span>
+                                        <span class="text-sm text-gray-700">Quick idea for Target's social personalization play</span>
+                                        
+                                    </div>
+                                                </div>
+                                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1.5">Email Body</p>
+                                                <div class="bg-gray-50 rounded-lg p-3 text-sm text-gray-700 leading-relaxed border border-gray-100 font-mono text-xs max-h-48 overflow-y-auto">
+                                                    <p class='mb-1'>Hi Cara,</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>Your article on "guests vs. customers" has been circulating in our team for months — it's the clearest articulation of what brand social should actually do.</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>We build AI-powered social systems for enterprise brands that operationalize exactly that philosophy — every outreach, every content piece, every sequence feels like it was written for one person.</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>We ran a version of this for a comparable retail brand and saw meaningful lift in both engagement and downstream conversion.</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>I'd love to show you what a Target Circle-tailored version would look like — 15 minutes?</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>— [Name]</p><p class='mb-1'>SociallyIn</p>
+                                                </div>
+                                                <div class="mt-3 flex gap-2">
+                                                    <button class="flex-1 py-1.5 bg-brand text-white text-xs font-medium rounded-lg hover:bg-brand-600 transition-colors">Approve &amp; Send</button>
+                                                    <button class="flex-1 py-1.5 bg-white border border-gray-200 text-gray-600 text-xs font-medium rounded-lg hover:bg-gray-50 transition-colors">Edit Draft</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </td>
-                                    <td class="px-6 py-4">Sequence Enrollment</td>
-                                    <td class="px-6 py-4">
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border border-green-200 bg-green-50 text-green-700">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> Active
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 text-right font-medium">62</td>
-                                    <td class="px-6 py-4 text-right text-gray-500">8</td>
-                                    <td class="px-6 py-4 text-gray-500 whitespace-normal min-w-[320px] leading-snug">Enrolls into HubSpot + LinkedIn sequences. Account-level pause on any reply</td>
                                 </tr>
-                                <tr class="hover:bg-gray-50 transition-colors group">
-                                    <td class="px-6 py-4"><input type="checkbox" class="rounded border-gray-300 text-brand focus:ring-brand w-4 h-4 cursor-pointer"></td>
-                                    <td class="px-6 py-4 font-medium text-gray-900 flex items-center gap-2">
-                                        <div class="w-6 h-6 rounded bg-gray-100 flex items-center justify-center border border-gray-200"><svg class="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg></div>
-                                        Router
-                                    </td>
-                                    <td class="px-6 py-4">Reply Classification</td>
+                                <tr class="hover:bg-gray-50 transition-colors cursor-pointer" onclick="toggleProfile('profile-3')">
+                                    <td class="px-6 py-4"><input type="checkbox" class="rounded border-gray-300 text-brand focus:ring-brand w-4 h-4 cursor-pointer" onclick="event.stopPropagation()"></td>
                                     <td class="px-6 py-4">
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border border-green-200 bg-green-50 text-green-700">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> Active
-                                        </span>
+                                        <div class="font-medium text-gray-900">Capital One Financial</div>
+                                        <div class="text-xs text-gray-400 mt-0.5">$37.7B revenue</div>
                                     </td>
-                                    <td class="px-6 py-4 text-right font-medium">11</td>
-                                    <td class="px-6 py-4 text-right text-gray-500">2</td>
-                                    <td class="px-6 py-4 text-gray-500 whitespace-normal min-w-[320px] leading-snug">Classifies replies: Hot / Warm / Soft No / Hard No / OOO. Drafts human-review replies</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-8 h-8 rounded-full bg-brand text-white flex items-center justify-center text-xs font-bold flex-shrink-0">NU</div>
+                                            <div>
+                                                <div class="font-medium text-gray-800">Nick Utton</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-500 text-sm">Chief Marketing Officer</td>
+                                    <td class="px-6 py-4"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-orange-50 text-orange-700 border border-orange-200">Tier 1</span></td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                                                <div class="h-full bg-brand rounded-full" style="width:87%"></div>
+                                            </div>
+                                            <span class="font-bold text-gray-800 text-sm">87</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4"><span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200 whitespace-nowrap">🔗 Connected</span></td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center justify-between gap-2">
+                                            <span class="text-sm text-gray-600">LinkedIn</span>
+                                            <svg class="w-4 h-4 text-gray-400 transition-transform" id="chevron-profile-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                        </div>
+                                    </td>
                                 </tr>
-                                <tr class="hover:bg-gray-50 transition-colors group">
-                                    <td class="px-6 py-4"><input type="checkbox" class="rounded border-gray-300 text-brand focus:ring-brand w-4 h-4 cursor-pointer"></td>
-                                    <td class="px-6 py-4 font-medium text-gray-900 flex items-center gap-2">
-                                        <div class="w-6 h-6 rounded bg-gray-100 flex items-center justify-center border border-gray-200"><svg class="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg></div>
-                                        Syncer
+                                <tr id="profile-3" class="hidden bg-gray-50 border-b border-gray-200">
+                                    <td colspan="8" class="px-6 py-6">
+                                        <div class="grid grid-cols-3 gap-6">
+
+                                            <!-- Account Tree -->
+                                            <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                                                <div class="flex items-center gap-2 mb-3">
+                                                    <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                                    <span class="text-sm font-semibold text-gray-800">Account Tree — Capital One Financial</span>
+                                                    <span class="ml-auto text-xs text-gray-400">4 contacts mapped</span>
+                                                </div>
+                                                <table class="w-full text-left">
+                                                    <thead>
+                                                        <tr class="text-[10px] uppercase tracking-wide text-gray-400 border-b border-gray-100">
+                                                            <th class="pb-1.5 px-4">Name</th>
+                                                            <th class="pb-1.5 px-4">Title</th>
+                                                            <th class="pb-1.5 px-4">Role</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="divide-y divide-gray-50">
+                                                        
+                                        <tr class="bg-orange-50">
+                                            <td class="px-4 py-2.5 font-medium text-gray-900 text-sm">
+                                                Nick Utton <span class='ml-1 text-[10px] font-semibold text-orange-600 bg-orange-100 px-1.5 py-0.5 rounded'>PRIMARY</span>
+                                            </td>
+                                            <td class="px-4 py-2.5 text-sm text-gray-500">Chief Marketing Officer</td>
+                                            <td class="px-4 py-2.5"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-red-50 text-red-700 border-red-200">Decision Maker</span></td>
+                                        </tr>
+                                        <tr class="">
+                                            <td class="px-4 py-2.5 font-medium text-gray-900 text-sm">
+                                                Sievert Larsen 
+                                            </td>
+                                            <td class="px-4 py-2.5 text-sm text-gray-500">SVP, Brand Marketing</td>
+                                            <td class="px-4 py-2.5"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-green-50 text-green-700 border-green-200">Champion</span></td>
+                                        </tr>
+                                        <tr class="">
+                                            <td class="px-4 py-2.5 font-medium text-gray-900 text-sm">
+                                                Amanda Foster 
+                                            </td>
+                                            <td class="px-4 py-2.5 text-sm text-gray-500">VP, Social & Content Strategy</td>
+                                            <td class="px-4 py-2.5"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-purple-50 text-purple-700 border-purple-200">Budget Holder</span></td>
+                                        </tr>
+                                        <tr class="">
+                                            <td class="px-4 py-2.5 font-medium text-gray-900 text-sm">
+                                                Jordan Miles 
+                                            </td>
+                                            <td class="px-4 py-2.5 text-sm text-gray-500">Director of Influencer & Creator</td>
+                                            <td class="px-4 py-2.5"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-blue-50 text-blue-700 border-blue-200">Influencer</span></td>
+                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <!-- Intel / Personal Signals -->
+                                            <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                                                <div class="flex items-center gap-2 mb-3">
+                                                    <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                                                    <span class="text-sm font-semibold text-gray-800">Intel — Personal Signals</span>
+                                                </div>
+                                                <ul class="space-y-2">
+                                                    
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Advertising Week speaker: <em>"The death of the brand voice — why every Capital One message is now 1:1"</em></span>
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Published AdAge op-ed on AI-driven personalization in financial services marketing</span>
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>LinkedIn: 12K followers, posts weekly about brand strategy and fintech trends</span>
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Oversees Capital One's full creator + influencer + social media budget (~$400M+)</span>
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Known for pushing Capital One's social beyond acquisition into community and loyalty</span>
+                                        </li>
+                                                </ul>
+                                                <div class="mt-4 pt-3 border-t border-gray-100">
+                                                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Wordsmith Hook</p>
+                                                    <p class="text-sm text-gray-700 italic leading-relaxed">"Nick — your AdAge piece on 1:1 brand messaging in fintech was one of the best articulations of where marketing is going. We build the AI outbound infrastructure that operationalizes that — personalized sequences, account trees, social signal profiling. We do it for brands at Capital One's scale. Worth a conversation?"</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- Email Preview -->
+                                            <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                                                <div class="flex items-center gap-2 mb-3">
+                                                    <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                                    <span class="text-sm font-semibold text-gray-800">Wordsmith — Email Draft</span>
+                                                    <span class="ml-auto text-[10px] font-semibold text-green-700 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">Ready to Send</span>
+                                                </div>
+                                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1.5">Subject Lines (3 variants)</p>
+                                                <div class="mb-3">
+                                                    
+                                    <div class="flex items-center gap-2 py-1.5 border-b border-gray-50 last:border-0">
+                                        <span class="text-orange-500 text-sm">★</span>
+                                        <span class="text-sm text-gray-700">Your AdAge piece on 1:1 messaging → what we built around it</span>
+                                        <span class='ml-auto text-[10px] font-semibold text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded'>BEST</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 py-1.5 border-b border-gray-50 last:border-0">
+                                        <span class="text-gray-300 text-sm">☆</span>
+                                        <span class="text-sm text-gray-700">Capital One social — the system behind the personalization</span>
+                                        
+                                    </div>
+                                    <div class="flex items-center gap-2 py-1.5 border-b border-gray-50 last:border-0">
+                                        <span class="text-gray-300 text-sm">☆</span>
+                                        <span class="text-sm text-gray-700">AI-powered outbound for financial services brands</span>
+                                        
+                                    </div>
+                                                </div>
+                                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1.5">Email Body</p>
+                                                <div class="bg-gray-50 rounded-lg p-3 text-sm text-gray-700 leading-relaxed border border-gray-100 font-mono text-xs max-h-48 overflow-y-auto">
+                                                    <p class='mb-1'>Hi Nick,</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>Your AdAge piece on 1:1 messaging in financial services marketing is exactly where the industry needs to go — and it's what we've been building systems for.</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>We created an AI-powered outbound engine that maps personal signals to messaging — LinkedIn activity, content engagement, public commentary — and sequences outreach that feels genuinely individual at enterprise scale.</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>We've deployed this for brands managing $200M+ in marketing spend. I think there's a compelling version for Capital One's creator and community strategy.</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>15 minutes to walk through it?</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>— [Name]</p><p class='mb-1'>SociallyIn</p>
+                                                </div>
+                                                <div class="mt-3 flex gap-2">
+                                                    <button class="flex-1 py-1.5 bg-brand text-white text-xs font-medium rounded-lg hover:bg-brand-600 transition-colors">Approve &amp; Send</button>
+                                                    <button class="flex-1 py-1.5 bg-white border border-gray-200 text-gray-600 text-xs font-medium rounded-lg hover:bg-gray-50 transition-colors">Edit Draft</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </td>
-                                    <td class="px-6 py-4">HubSpot Enterprise Sync</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors cursor-pointer" onclick="toggleProfile('profile-4')">
+                                    <td class="px-6 py-4"><input type="checkbox" class="rounded border-gray-300 text-brand focus:ring-brand w-4 h-4 cursor-pointer" onclick="event.stopPropagation()"></td>
                                     <td class="px-6 py-4">
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border border-green-200 bg-green-50 text-green-700">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> Active
-                                        </span>
+                                        <div class="font-medium text-gray-900">MGM Resorts International</div>
+                                        <div class="text-xs text-gray-400 mt-0.5">$16.2B revenue</div>
                                     </td>
-                                    <td class="px-6 py-4 text-right font-medium">183</td>
-                                    <td class="px-6 py-4 text-right text-gray-500">0</td>
-                                    <td class="px-6 py-4 text-gray-500 whitespace-normal min-w-[320px] leading-snug">Real-time HubSpot sync: icp_score, tree_role, personal_hook, gift_status, sequence_status</td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-8 h-8 rounded-full bg-brand text-white flex items-center justify-center text-xs font-bold flex-shrink-0">SS</div>
+                                            <div>
+                                                <div class="font-medium text-gray-800">Sajith Sivanandan</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-gray-500 text-sm">EVP & Chief Digital Officer</td>
+                                    <td class="px-6 py-4"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-orange-50 text-orange-700 border border-orange-200">Tier 1</span></td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                                                <div class="h-full bg-brand rounded-full" style="width:84%"></div>
+                                            </div>
+                                            <span class="font-bold text-gray-800 text-sm">84</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4"><span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200 whitespace-nowrap">📅 Day 2</span></td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center justify-between gap-2">
+                                            <span class="text-sm text-gray-600">Email</span>
+                                            <svg class="w-4 h-4 text-gray-400 transition-transform" id="chevron-profile-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="profile-4" class="hidden bg-gray-50 border-b border-gray-200">
+                                    <td colspan="8" class="px-6 py-6">
+                                        <div class="grid grid-cols-3 gap-6">
+
+                                            <!-- Account Tree -->
+                                            <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                                                <div class="flex items-center gap-2 mb-3">
+                                                    <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                                    <span class="text-sm font-semibold text-gray-800">Account Tree — MGM Resorts International</span>
+                                                    <span class="ml-auto text-xs text-gray-400">4 contacts mapped</span>
+                                                </div>
+                                                <table class="w-full text-left">
+                                                    <thead>
+                                                        <tr class="text-[10px] uppercase tracking-wide text-gray-400 border-b border-gray-100">
+                                                            <th class="pb-1.5 px-4">Name</th>
+                                                            <th class="pb-1.5 px-4">Title</th>
+                                                            <th class="pb-1.5 px-4">Role</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="divide-y divide-gray-50">
+                                                        
+                                        <tr class="bg-orange-50">
+                                            <td class="px-4 py-2.5 font-medium text-gray-900 text-sm">
+                                                Sajith Sivanandan <span class='ml-1 text-[10px] font-semibold text-orange-600 bg-orange-100 px-1.5 py-0.5 rounded'>PRIMARY</span>
+                                            </td>
+                                            <td class="px-4 py-2.5 text-sm text-gray-500">EVP & Chief Digital Officer</td>
+                                            <td class="px-4 py-2.5"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-red-50 text-red-700 border-red-200">Decision Maker</span></td>
+                                        </tr>
+                                        <tr class="">
+                                            <td class="px-4 py-2.5 font-medium text-gray-900 text-sm">
+                                                Yasha Kayan 
+                                            </td>
+                                            <td class="px-4 py-2.5 text-sm text-gray-500">Chief Marketing Officer</td>
+                                            <td class="px-4 py-2.5"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-green-50 text-green-700 border-green-200">Champion</span></td>
+                                        </tr>
+                                        <tr class="">
+                                            <td class="px-4 py-2.5 font-medium text-gray-900 text-sm">
+                                                Stacy Brown 
+                                            </td>
+                                            <td class="px-4 py-2.5 text-sm text-gray-500">VP of Brand Social & Content</td>
+                                            <td class="px-4 py-2.5"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-purple-50 text-purple-700 border-purple-200">Budget Holder</span></td>
+                                        </tr>
+                                        <tr class="">
+                                            <td class="px-4 py-2.5 font-medium text-gray-900 text-sm">
+                                                Derek Rios 
+                                            </td>
+                                            <td class="px-4 py-2.5 text-sm text-gray-500">Director of Digital Acquisition</td>
+                                            <td class="px-4 py-2.5"><span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border bg-blue-50 text-blue-700 border-blue-200">Influencer</span></td>
+                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <!-- Intel / Personal Signals -->
+                                            <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                                                <div class="flex items-center gap-2 mb-3">
+                                                    <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                                                    <span class="text-sm font-semibold text-gray-800">Intel — Personal Signals</span>
+                                                </div>
+                                                <ul class="space-y-2">
+                                                    
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Joined MGM from Google in 2021 — known for bringing data/AI culture into hospitality marketing</span>
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Published Forbes contributor piece: <em>"How Las Vegas became the world's best social content engine"</em></span>
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Stanford MBA · previously Global Managing Director at Google Marketing Platform</span>
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>LinkedIn: posts about data-driven brand building and entertainment marketing convergence</span>
+                                        </li>
+                                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                                            <svg class="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <span>Overseeing MGM's $2B+ digital transformation — social is a core pillar</span>
+                                        </li>
+                                                </ul>
+                                                <div class="mt-4 pt-3 border-t border-gray-100">
+                                                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Wordsmith Hook</p>
+                                                    <p class="text-sm text-gray-700 italic leading-relaxed">"Sajith — your Forbes piece on Las Vegas as a content engine is something we think about constantly. We build AI-powered social systems that operationalize exactly that — entertainment brand signals mapped to enterprise outreach at scale. Given your background at Google and what you're building at MGM, I think we could do something genuinely interesting together."</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- Email Preview -->
+                                            <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
+                                                <div class="flex items-center gap-2 mb-3">
+                                                    <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                                    <span class="text-sm font-semibold text-gray-800">Wordsmith — Email Draft</span>
+                                                    <span class="ml-auto text-[10px] font-semibold text-green-700 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">Ready to Send</span>
+                                                </div>
+                                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1.5">Subject Lines (3 variants)</p>
+                                                <div class="mb-3">
+                                                    
+                                    <div class="flex items-center gap-2 py-1.5 border-b border-gray-50 last:border-0">
+                                        <span class="text-orange-500 text-sm">★</span>
+                                        <span class="text-sm text-gray-700">Your Forbes piece on Vegas as a content engine (+ what we'd build for MGM)</span>
+                                        <span class='ml-auto text-[10px] font-semibold text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded'>BEST</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 py-1.5 border-b border-gray-50 last:border-0">
+                                        <span class="text-gray-300 text-sm">☆</span>
+                                        <span class="text-sm text-gray-700">MGM's social play — AI system we'd build around it</span>
+                                        
+                                    </div>
+                                    <div class="flex items-center gap-2 py-1.5 border-b border-gray-50 last:border-0">
+                                        <span class="text-gray-300 text-sm">☆</span>
+                                        <span class="text-sm text-gray-700">15 min — the Google-meets-hospitality marketing system</span>
+                                        
+                                    </div>
+                                                </div>
+                                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1.5">Email Body</p>
+                                                <div class="bg-gray-50 rounded-lg p-3 text-sm text-gray-700 leading-relaxed border border-gray-100 font-mono text-xs max-h-48 overflow-y-auto">
+                                                    <p class='mb-1'>Hi Sajith,</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>Your Forbes piece on Las Vegas as the world's best social content engine is one of the clearest articulations of what hospitality brand marketing can be.</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>We build AI-powered outbound systems that operationalize exactly that — personal signal mapping, account tree targeting, multi-channel sequences — for enterprise brands scaling social across complex portfolios.</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>Given your Google background and what you're building at MGM, I think the intersection of data infrastructure + social content is where this gets really interesting.</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>Worth 15 minutes?</p><p class='mb-1'>&nbsp;</p><p class='mb-1'>— [Name]</p><p class='mb-1'>SociallyIn</p>
+                                                </div>
+                                                <div class="mt-3 flex gap-2">
+                                                    <button class="flex-1 py-1.5 bg-brand text-white text-xs font-medium rounded-lg hover:bg-brand-600 transition-colors">Approve &amp; Send</button>
+                                                    <button class="flex-1 py-1.5 bg-white border border-gray-200 text-gray-600 text-xs font-medium rounded-lg hover:bg-gray-50 transition-colors">Edit Draft</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -354,7 +1028,7 @@
                     <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex flex-col justify-between h-28">
                         <span class="text-sm font-medium text-gray-500">Companies Targeted</span>
                         <div class="flex items-baseline gap-2 mt-1">
-                            <span class="text-3xl font-bold text-gray-900">47</span>
+                            <span class="text-3xl font-bold text-gray-900">5</span>
                         </div>
                         <span class="text-xs text-gray-500 mt-2">↑ +12 this week</span>
                     </div>
@@ -630,7 +1304,7 @@
                             <button class="p-1 rounded text-gray-400 hover:text-gray-700 hover:bg-gray-100"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
                         </div>
                         <div class="text-sm text-gray-500">
-                            Showing <span class="font-medium text-gray-900">1–8</span> of <span class="font-medium text-gray-900">183</span>
+                            Showing <span class="font-medium text-gray-900">1–5</span> of <span class="font-medium text-gray-900">5</span>
                         </div>
                     </div>
                 </div>
@@ -954,6 +1628,19 @@
 
     
     <script>
+        
+        function toggleProfile(id) {
+            const row = document.getElementById(id);
+            const chevron = document.getElementById('chevron-' + id);
+            if (row.classList.contains('hidden')) {
+                row.classList.remove('hidden');
+                if (chevron) chevron.style.transform = 'rotate(180deg)';
+            } else {
+                row.classList.add('hidden');
+                if (chevron) chevron.style.transform = '';
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const navItems = document.querySelectorAll('.nav-item');
             const tabContents = document.querySelectorAll('.tab-content');
