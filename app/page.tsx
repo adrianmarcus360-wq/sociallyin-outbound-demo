@@ -1,593 +1,544 @@
 "use client";
-import React from "react";
-
-import { useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 
-// ─── Icons (inline SVG) ───────────────────────────────────────────────────────
-
-const Icon = {
-  dashboard: (cls = "") => <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" /></svg>,
-  agents:    (cls = "") => <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>,
-  prospects: (cls = "") => <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
-  sequence:  (cls = "") => <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>,
-  integrations: (cls = "") => <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>,
-  settings:  (cls = "") => <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
-  help:      (cls = "") => <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>,
-  search:    (cls = "") => <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>,
-  filter:    (cls = "") => <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>,
-  sort:      (cls = "") => <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path d="M3 6h18M7 12h10M11 18h2"/></svg>,
-  export:    (cls = "") => <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>,
-  bell:      (cls = "") => <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>,
-  chevron:   (cls = "") => <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><polyline points="9 18 15 12 9 6"/></svg>,
-  dot:       (cls = "") => <svg className={cls} viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>,
-  check:     (cls = "") => <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><polyline points="20 6 9 17 4 12"/></svg>,
-  menu:      (cls = "") => <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>,
-  target:    (cls = "") => <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>,
-  trending:  (cls = "") => <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>,
-  mail:      (cls = "") => <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>,
-  calendar:  (cls = "") => <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>,
-};
-
-// ─── Data ────────────────────────────────────────────────────────────────────
-
-const AGENTS = [
-  { id: "scout",     emoji: "🔍", name: "Scout",      role: "ICP Scoring & Discovery",      status: "active",  done: 47,  queue: 0,  desc: "Scores companies 0–100, assigns Tier 1/2/3, pulls Fortune 1000, Inc. 5000, Series B+ targets." },
-  { id: "mapper",    emoji: "🗺️", name: "Mapper",     role: "Account Tree Builder",          status: "active",  done: 183, queue: 12, desc: "Identifies 3–7 contacts/company. Tags Decision Maker, Champion, Influencer, Budget Holder." },
-  { id: "intel",     emoji: "🕵️", name: "Intel",      role: "Cross-Platform Research",       status: "running", done: 156, queue: 27, desc: "Parallel LinkedIn, Twitter/X, Instagram research. Surfaces personal signals — sports, hobbies, career wins." },
-  { id: "profiler",  emoji: "🧠", name: "Profiler",   role: "Profile Card Generator",        status: "active",  done: 134, queue: 22, desc: "Synthesizes Intel into Profile Cards. Selects best SociallyIn case study per industry." },
-  { id: "wordsmith", emoji: "✍️", name: "Wordsmith",  role: "Message Personalization",       status: "idle",    done: 89,  queue: 45, desc: "Generates custom first lines, 3 subject variants, LinkedIn messages, social DM openers, gift recs." },
-  { id: "conductor", emoji: "🎬", name: "Conductor",  role: "Sequence Enrollment",           status: "active",  done: 62,  queue: 8,  desc: "Enrolls into HubSpot + LinkedIn sequences. Any reply at a company pauses all sequences instantly." },
-  { id: "router",    emoji: "📬", name: "Router",     role: "Reply Classification",          status: "active",  done: 11,  queue: 2,  desc: "Classifies replies: Hot / Warm / Soft No / Hard No / Referral / OOO. Drafts replies for human review." },
-  { id: "syncer",    emoji: "🔄", name: "Syncer",     role: "HubSpot Enterprise Sync",       status: "active",  done: 183, queue: 0,  desc: "Real-time HubSpot sync: icp_score, tree_role, personal_hook, gift_status, sequence_status." },
-];
-
-const PROSPECTS = [
-  { company: "Marriott International", contact: "Sarah Chen",      title: "VP of Brand Marketing",       tier: 1, score: 96, stage: "Hot Reply",   channel: "Email",    days: 4  },
-  { company: "Capital One",            contact: "Marcus Williams", title: "Director of Social Strategy",  tier: 1, score: 92, stage: "Hot Reply",   channel: "LinkedIn", days: 6  },
-  { company: "Best Buy",               contact: "Jennifer Park",   title: "CMO",                          tier: 1, score: 89, stage: "Warm Reply",  channel: "Email",    days: 8  },
-  { company: "Hilton Hotels",          contact: "Michelle James",  title: "SVP Brand Marketing",          tier: 1, score: 86, stage: "Meeting Set", channel: "LinkedIn", days: 11 },
-  { company: "Target Corporation",     contact: "Derek Simmons",   title: "VP Brand Marketing",           tier: 1, score: 88, stage: "Day 5",       channel: "LinkedIn", days: 5  },
-  { company: "Wingstop",               contact: "Carlos Rivera",   title: "Chief Marketing Officer",      tier: 2, score: 83, stage: "Meeting Set", channel: "Email",    days: 14 },
-  { company: "General Mills",          contact: "David Torres",    title: "Sr. Director, Digital & Social",tier: 1, score: 85, stage: "Warm Reply",  channel: "Email",    days: 9  },
-  { company: "Peloton",                contact: "Nicole Grant",    title: "CMO",                          tier: 1, score: 84, stage: "Day 2",       channel: "Email",    days: 2  },
-];
-
-const SEQUENCES = [
-  { day: 1,  label: "Email 1 — Personalized Opener",      type: "email",    desc: "Hyper-personalized first line from Profile Card + SociallyIn case study relevant to their industry." },
-  { day: 3,  label: "LinkedIn Connection Request",         type: "linkedin", desc: "Connection note tied to their most recent post, career win, or mutual connection." },
-  { day: 5,  label: "Email 2 — Competitive Angle",         type: "email",    desc: "Follow-up using a competitor gap or trending tactic in their specific vertical." },
-  { day: 8,  label: "LinkedIn Message",                    type: "linkedin", desc: "First LinkedIn DM — value-first insight, zero sales pressure, under 5 lines." },
-  { day: 10, label: "Email 3 — Reddit / SEO Angle",        type: "email",    desc: "Unique insight their team likely hasn't seen. Dark social + organic angle." },
-  { day: 13, label: "Loom Video",                          type: "video",    desc: "60-second personal Loom recorded for this specific contact. Biggest pattern interrupt in the sequence." },
-  { day: 18, label: '"Did I get this wrong?"',             type: "email",    desc: "The reply-getter. Honest, short, non-pushy. Invites feedback instead of demanding attention." },
-  { day: 22, label: "Gift Drop",                           type: "gift",     desc: "Personalized gift based on profile signals: team gear, golf, restaurant credit, or cause donation." },
-  { day: 28, label: "Break-Up Email",                      type: "email",    desc: "Most-replied-to email in any sequence. Closure framing. Short. Honest." },
-];
-
-const INTEGRATIONS = [
-  { name: "HubSpot Enterprise", category: "CRM",         status: "active",  note: "Sequences + contacts" },
-  { name: "Apollo.io",          category: "Prospecting",  status: "phase2",  note: "Prospect discovery" },
-  { name: "XPL e.com API",      category: "Enrichment",   status: "phase2",  note: "Contact enrichment" },
-  { name: "Proxycurl",          category: "LinkedIn",     status: "phase2",  note: "LinkedIn data" },
-  { name: "Heyreach",           category: "LinkedIn Seq", status: "phase2",  note: "LinkedIn automation" },
-  { name: "Instantly.ai",       category: "Email",        status: "phase2",  note: "Email sequences" },
-  { name: "Sendoso",            category: "Gifts",        status: "phase2",  note: "Gift fulfillment" },
-];
-
-// ─── Badge helpers ────────────────────────────────────────────────────────────
-
-const agentStatusBadge = (s: string) => {
-  if (s === "active")  return { bg: "bg-emerald-50 text-emerald-700 border-emerald-200", dot: "bg-emerald-500", label: "Active" };
-  if (s === "running") return { bg: "bg-blue-50 text-blue-700 border-blue-200",          dot: "bg-blue-500",    label: "Running" };
-  if (s === "idle")    return { bg: "bg-amber-50 text-amber-700 border-amber-200",       dot: "bg-amber-400",   label: "Idle" };
-  return                        { bg: "bg-gray-100 text-gray-500 border-gray-200",       dot: "bg-gray-400",    label: "Offline" };
-};
-
-const stageBadge = (s: string) => {
-  if (s === "Hot Reply")   return "bg-red-50 text-red-700 border-red-200";
-  if (s === "Meeting Set") return "bg-emerald-50 text-emerald-700 border-emerald-200";
-  if (s === "Warm Reply")  return "bg-amber-50 text-amber-700 border-amber-200";
-  if (s === "Day 2" || s === "Day 5") return "bg-purple-50 text-purple-700 border-purple-200";
-  return "bg-gray-100 text-gray-600 border-gray-200";
-};
-
-const seqColors: Record<string, { bar: string; bg: string; label: string }> = {
-  email:    { bar: "bg-orange-400",  bg: "bg-orange-50 border-orange-200",  label: "Email" },
-  linkedin: { bar: "bg-blue-400",    bg: "bg-blue-50 border-blue-200",      label: "LinkedIn" },
-  video:    { bar: "bg-purple-400",  bg: "bg-purple-50 border-purple-200",  label: "Video" },
-  gift:     { bar: "bg-pink-400",    bg: "bg-pink-50 border-pink-200",      label: "Gift" },
-};
-
-const METRICS = [
-  { label: "Companies Targeted", value: "47",   sub: "+12 this week",    color: "text-orange-500", icon: Icon.target  },
-  { label: "Contacts Mapped",    value: "183",  sub: "+38 this week",    color: "text-blue-500",   icon: Icon.agents  },
-  { label: "In Sequence",        value: "62",   sub: "34% of pipeline",  color: "text-emerald-500",icon: Icon.trending },
-  { label: "Replies Received",   value: "11",   sub: "17.7% reply rate", color: "text-purple-500", icon: Icon.mail    },
-  { label: "Meetings Booked",    value: "3",    sub: "Avg $105K deal",   color: "text-emerald-500",icon: Icon.calendar },
-  { label: "Est. Pipeline",      value: "$315K",sub: "Phase 1 data",     color: "text-orange-500", icon: Icon.trending },
-];
-
-// ─── Nav ──────────────────────────────────────────────────────────────────────
+// ─── Types & Data ─────────────────────────────────────────────────────────────
 
 type Tab = "agents" | "prospects" | "sequence" | "integrations";
 
-const NAV: { id: Tab; label: string; icon: (cls: string) => React.ReactElement }[] = [
-  { id: "agents",       label: "Agent Pipeline",   icon: Icon.agents },
-  { id: "prospects",    label: "Live Prospects",    icon: Icon.prospects },
-  { id: "sequence",     label: "Sequence Logic",    icon: Icon.sequence },
-  { id: "integrations", label: "Integrations",      icon: Icon.integrations },
+const AGENTS = [
+  { name: "Scout", role: "ICP Scoring & Discovery", status: "active", done: 47, queue: 0, desc: "Scores every company 0–100, assigns Tier 1/2/3, pulls Fortune 1000, Inc. 5000, and Series B+ targets." },
+  { name: "Mapper", role: "Account Tree Builder", status: "active", done: 183, queue: 12, desc: "Identifies 3–7 contacts per company. Tags each as Decision Maker, Champion, Influencer, or Budget Holder." },
+  { name: "Intel", role: "Cross-Platform Research", status: "running", done: 156, queue: 27, desc: "Parallel research on LinkedIn, Twitter/X, and Instagram. Surfaces personal signals — sports, hobbies, causes, career wins." },
+  { name: "Profiler", role: "Profile Card Generator", status: "active", done: 134, queue: 22, desc: "Synthesizes Intel data into Profile Cards. Selects best SociallyIn case study per industry." },
+  { name: "Wordsmith", role: "Message Personalization", status: "idle", done: 89, queue: 45, desc: "Generates custom first lines, 3 subject variants, LinkedIn messages, social DM openers, and gift recommendations." },
+  { name: "Conductor", role: "Sequence Enrollment", status: "active", done: 62, queue: 8, desc: "Enrolls into HubSpot + LinkedIn sequences. Account-level pause on any reply, anywhere." },
+  { name: "Router", role: "Reply Classification", status: "active", done: 11, queue: 2, desc: "Classifies every reply: Hot / Warm / Soft No / Hard No / Referral / OOO. Drafts replies for human review." },
+  { name: "Syncer", role: "HubSpot Enterprise Sync", status: "active", done: 183, queue: 0, desc: "Real-time sync with custom HubSpot properties: icp_score, tree_role, personal_hook, gift_status, sequence_status." },
 ];
 
-// ─── Subcomponents ────────────────────────────────────────────────────────────
+const PROSPECTS = [
+  { company: "Marriott International", contact: "Sarah Chen", title: "VP of Brand Marketing", tier: 1, score: 96, stage: "Hot Reply", channel: "Email" },
+  { company: "Capital One", contact: "Marcus Williams", title: "Director of Social Strategy", tier: 1, score: 92, stage: "Hot Reply", channel: "LinkedIn" },
+  { company: "Best Buy", contact: "Jennifer Park", title: "CMO", tier: 1, score: 89, stage: "Warm Reply", channel: "Email" },
+  { company: "Hilton Hotels", contact: "Michelle James", title: "SVP Brand Marketing", tier: 1, score: 86, stage: "Meeting Set", channel: "LinkedIn" },
+  { company: "Target Corporation", contact: "Derek Simmons", title: "VP Brand Marketing", tier: 1, score: 88, stage: "Connected", channel: "LinkedIn" },
+  { company: "Wingstop", contact: "Carlos Rivera", title: "Chief Marketing Officer", tier: 2, score: 83, stage: "Meeting Set", channel: "Email" },
+  { company: "General Mills", contact: "David Torres", title: "Sr. Director, Digital & Social", tier: 1, score: 85, stage: "Warm Reply", channel: "Email" },
+  { company: "Peloton", contact: "Nicole Grant", title: "CMO", tier: 1, score: 84, stage: "Day 2", channel: "Email" },
+];
 
-function Pill({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return (
-    <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium border ${className}`}>
-      {children}
-    </span>
-  );
+const SEQUENCES = [
+  { day: 1, label: "Email 1 — Personalized Hook", type: "email", desc: "Hyper-personalized first line from Profile Card + relevant SociallyIn case study link." },
+  { day: 3, label: "LinkedIn Connection", type: "linkedin", desc: "Connect request with customized note tied to their recent post or career win." },
+  { day: 5, label: "Email 2 — Competitor Angle", type: "email", desc: "Follow-up: competitor angle or trending tactic in their industry." },
+  { day: 8, label: "LinkedIn Message 1", type: "linkedin", desc: "First LinkedIn message — value-first, zero sales pressure." },
+  { day: 10, label: "Email 3 — Unique Insight", type: "email", desc: "Reddit / SEO angle or unique insight their team likely hasn't considered." },
+  { day: 13, label: "Loom Video", type: "video", desc: "60-second personal Loom recorded for this specific contact — biggest pattern interrupt in the sequence." },
+  { day: 18, label: '"Did I get this wrong?"', type: "email", desc: "The reply-getter. Honest, short, non-pushy. Invites feedback instead of demanding attention." },
+  { day: 22, label: "Gift Drop", type: "gift", desc: "Personalized gift based on their interests: Lakers gear, golf, restaurant credit, or cause donation." },
+  { day: 28, label: "Break-Up Email", type: "email", desc: "The most-replied-to email in any sequence. Closure framing. Short. Honest." },
+];
+
+const INTEGRATIONS = [
+  { name: "HubSpot Enterprise", note: "CRM + sequences + custom properties", status: "active" },
+  { name: "Apollo.io", note: "Prospect discovery & enrichment", status: "phase2" },
+  { name: "XPL e.com API", note: "Deep enrichment layer", status: "phase2" },
+  { name: "Proxycurl", note: "LinkedIn profile data", status: "phase2" },
+  { name: "Heyreach", note: "LinkedIn automation & sequences", status: "phase2" },
+  { name: "Instantly.ai", note: "Email sequence engine", status: "phase2" },
+  { name: "Apify", note: "Social media scraping", status: "phase2" },
+  { name: "Sendoso", note: "Gift fulfillment", status: "phase2" },
+];
+
+// ─── Mini SVG icons (inline, no library needed) ────────────────────────────
+
+const Icons = {
+  agents: (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714a2.25 2.25 0 001.357 2.059l.904.452a2.25 2.25 0 001.957-.092L21 12.25M4.5 15.75l4.5-4.5M21 12.25v8a.75.75 0 01-.75.75H3.75a.75.75 0 01-.75-.75V12.25" />
+    </svg>
+  ),
+  prospects: (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+    </svg>
+  ),
+  sequence: (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />
+    </svg>
+  ),
+  integrations: (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z" />
+    </svg>
+  ),
+  filter: (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
+    </svg>
+  ),
+  sort: (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
+    </svg>
+  ),
+  export: (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+    </svg>
+  ),
+  search: (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+    </svg>
+  ),
+  bell: (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+    </svg>
+  ),
+  check: (
+    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+    </svg>
+  ),
+};
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+function statusBadge(s: string) {
+  if (s === "active") return <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-200"><span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block" />Active</span>;
+  if (s === "running") return <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200"><span className="w-1.5 h-1.5 rounded-full bg-blue-500 inline-block" />Running</span>;
+  if (s === "idle") return <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200"><span className="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block" />Idle</span>;
+  return null;
 }
 
-function StatusDot({ color }: { color: string }) {
-  return <span className={`w-1.5 h-1.5 rounded-full ${color} inline-block`} />;
+function stageBadge(s: string) {
+  if (s === "Hot Reply") return <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-red-50 text-red-700 border border-red-200">🔥 Hot Reply</span>;
+  if (s === "Meeting Set") return <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-200">✅ Meeting Set</span>;
+  if (s === "Warm Reply") return <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">♻️ Warm Reply</span>;
+  if (s === "Connected") return <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">🔗 Connected</span>;
+  return <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 border border-gray-200">{s}</span>;
 }
 
-// ─── Views ────────────────────────────────────────────────────────────────────
+function tierBadge(t: number) {
+  if (t === 1) return <span className="inline-flex items-center text-xs font-semibold px-2 py-0.5 rounded-full bg-orange-50 text-orange-700 border border-orange-200">Tier 1</span>;
+  return <span className="inline-flex items-center text-xs font-semibold px-2 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200">Tier 2</span>;
+}
 
-function AgentsView() {
-  const summary = [
-    { label: "Total Agents",   value: "8",   sub: "All deployed",      sub_color: "text-emerald-600" },
-    { label: "Active",         value: "6",   sub: "+1 this session",   sub_color: "text-emerald-600" },
-    { label: "Idle",           value: "1",   sub: "Wordsmith queued",  sub_color: "text-amber-600"  },
-    { label: "Tasks Completed",value: "682", sub: "+136 today",        sub_color: "text-emerald-600" },
+const seqColors: Record<string, string> = {
+  email: "bg-orange-500",
+  linkedin: "bg-blue-500",
+  video: "bg-purple-500",
+  gift: "bg-pink-500",
+};
+
+const seqLabels: Record<string, string> = {
+  email: "Email",
+  linkedin: "LinkedIn",
+  video: "Video",
+  gift: "Gift",
+};
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
+
+export default function Page() {
+  const [tab, setTab] = useState<Tab>("agents");
+
+  const navItems: { id: Tab; label: string; icon: React.ReactElement }[] = [
+    { id: "agents", label: "Agent Pipeline", icon: Icons.agents },
+    { id: "prospects", label: "Live Prospects", icon: Icons.prospects },
+    { id: "sequence", label: "Sequence Logic", icon: Icons.sequence },
+    { id: "integrations", label: "Integrations", icon: Icons.integrations },
   ];
 
-  return (
-    <div className="space-y-5">
-      {/* Summary cards */}
-      <div className="grid grid-cols-4 gap-4">
-        {summary.map((s) => (
-          <div key={s.label} className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
-            <p className="text-sm text-gray-500 mb-1">{s.label}</p>
-            <p className="text-3xl font-bold text-gray-900">{s.value}</p>
-            <p className={`text-xs mt-1.5 font-medium ${s.sub_color}`}>↑ {s.sub}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Table controls */}
-      <div className="flex items-center justify-between">
-        <div className="relative">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">{Icon.search("w-4 h-4")}</span>
-          <input
-            className="pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-lg bg-white w-60 focus:outline-none focus:ring-2 focus:ring-orange-100 focus:border-orange-300"
-            placeholder="Search agents..."
-          />
-        </div>
-        <div className="flex items-center gap-2">
-          <button className="flex items-center gap-1.5 px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white text-gray-600 hover:bg-gray-50">
-            {Icon.filter("w-4 h-4")} Filter
-          </button>
-          <button className="flex items-center gap-1.5 px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white text-gray-600 hover:bg-gray-50">
-            {Icon.sort("w-4 h-4")} Sort
-          </button>
-          <button className="flex items-center gap-1.5 px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white text-gray-600 hover:bg-gray-50">
-            {Icon.export("w-4 h-4")} Export
-          </button>
-        </div>
-      </div>
-
-      {/* Table */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-        <table className="w-full">
-          <thead>
-            <tr className="bg-gray-50 border-b border-gray-100">
-              <th className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-5 py-3 w-8">
-                <input type="checkbox" className="rounded border-gray-300" />
-              </th>
-              {["Agent", "Role", "Status", "Tasks Done", "Queue", "Description"].map((h) => (
-                <th key={h} className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-50">
-            {AGENTS.map((a, i) => {
-              const st = agentStatusBadge(a.status);
-              return (
-                <tr key={a.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-5 py-3.5">
-                    <input type="checkbox" className="rounded border-gray-300" />
-                  </td>
-                  <td className="px-4 py-3.5">
-                    <div className="flex items-center gap-2.5">
-                      <span className="text-xl">{a.emoji}</span>
-                      <div>
-                        <p className="text-sm font-semibold text-gray-900">{a.name}</p>
-                        <p className="text-xs text-gray-400">Agent #{i + 1}</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3.5 text-xs text-gray-500">{a.role}</td>
-                  <td className="px-4 py-3.5">
-                    <Pill className={st.bg}>
-                      <StatusDot color={st.dot} />
-                      {st.label}
-                    </Pill>
-                  </td>
-                  <td className="px-4 py-3.5 text-sm font-semibold text-gray-800">{a.done}</td>
-                  <td className="px-4 py-3.5">
-                    <span className={`text-sm font-semibold ${a.queue > 0 ? "text-orange-500" : "text-gray-400"}`}>{a.queue}</span>
-                  </td>
-                  <td className="px-4 py-3.5 text-xs text-gray-500 max-w-xs">{a.desc}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-        <div className="px-5 py-3 border-t border-gray-100 bg-gray-50 flex items-center justify-between">
-          <p className="text-xs text-gray-400">Showing 8 of 8 agents</p>
-          <div className="flex items-center gap-1">
-            {[1].map((p) => (
-              <button key={p} className="w-7 h-7 rounded text-xs font-medium bg-orange-500 text-white">{p}</button>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ProspectsView() {
-  return (
-    <div className="space-y-5">
-      {/* Metric cards */}
-      <div className="grid grid-cols-4 gap-4">
-        {[
-          { label: "Hot Replies",   value: "2",  sub: "Needs review",     color: "text-red-500",     sub_color: "text-red-500" },
-          { label: "Meetings Set",  value: "3",  sub: "Avg $105K deal",   color: "text-emerald-600", sub_color: "text-emerald-600" },
-          { label: "Warm Replies",  value: "2",  sub: "Follow-up ready",  color: "text-amber-500",   sub_color: "text-amber-600" },
-          { label: "In Sequence",   value: "62", sub: "17.7% reply rate", color: "text-blue-500",    sub_color: "text-emerald-600" },
-        ].map((s) => (
-          <div key={s.label} className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
-            <p className="text-sm text-gray-500 mb-1">{s.label}</p>
-            <p className={`text-3xl font-bold ${s.color}`}>{s.value}</p>
-            <p className={`text-xs mt-1.5 font-medium ${s.sub_color}`}>{s.sub}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Table controls */}
-      <div className="flex items-center justify-between">
-        <div className="relative">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">{Icon.search("w-4 h-4")}</span>
-          <input
-            className="pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-lg bg-white w-64 focus:outline-none focus:ring-2 focus:ring-orange-100 focus:border-orange-300"
-            placeholder="Search prospects..."
-          />
-        </div>
-        <div className="flex items-center gap-2">
-          <button className="flex items-center gap-1.5 px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white text-gray-600 hover:bg-gray-50">
-            {Icon.filter("w-4 h-4")} Filter
-          </button>
-          <button className="flex items-center gap-1.5 px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white text-gray-600 hover:bg-gray-50">
-            {Icon.sort("w-4 h-4")} Sort
-          </button>
-          <button className="flex items-center gap-1.5 px-3 py-2 text-sm border border-gray-200 rounded-lg bg-white text-gray-600 hover:bg-gray-50">
-            {Icon.export("w-4 h-4")} Export CSV
-          </button>
-          <button className="flex items-center gap-1.5 px-4 py-2 text-sm rounded-lg bg-orange-500 text-white font-semibold hover:bg-orange-600">
-            + Add Prospect
-          </button>
-        </div>
-      </div>
-
-      {/* Table */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-        <table className="w-full">
-          <thead>
-            <tr className="bg-gray-50 border-b border-gray-100">
-              <th className="w-8 px-5 py-3">
-                <input type="checkbox" className="rounded border-gray-300" />
-              </th>
-              {["Company", "Contact", "Title", "Tier", "ICP Score", "Stage", "Channel", "Day"].map((h) => (
-                <th key={h} className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 py-3">{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-50">
-            {PROSPECTS.map((p, i) => (
-              <tr key={i} className="hover:bg-gray-50 transition-colors">
-                <td className="px-5 py-3.5">
-                  <input type="checkbox" className="rounded border-gray-300" />
-                </td>
-                <td className="px-4 py-3.5">
-                  <p className="text-sm font-semibold text-gray-900">{p.company}</p>
-                </td>
-                <td className="px-4 py-3.5">
-                  <p className="text-sm font-medium text-gray-700">{p.contact}</p>
-                </td>
-                <td className="px-4 py-3.5 text-xs text-gray-500 max-w-[180px]">{p.title}</td>
-                <td className="px-4 py-3.5">
-                  <Pill className={p.tier === 1 ? "bg-orange-50 text-orange-700 border-orange-200" : "bg-purple-50 text-purple-700 border-purple-200"}>
-                    Tier {p.tier}
-                  </Pill>
-                </td>
-                <td className="px-4 py-3.5">
-                  <div className="flex items-center gap-2">
-                    <div className="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                      <div className="h-full bg-orange-400 rounded-full" style={{ width: `${p.score}%` }} />
-                    </div>
-                    <span className="text-sm font-bold text-gray-800">{p.score}</span>
-                  </div>
-                </td>
-                <td className="px-4 py-3.5">
-                  <Pill className={stageBadge(p.stage)}>{p.stage}</Pill>
-                </td>
-                <td className="px-4 py-3.5 text-sm text-gray-500">{p.channel}</td>
-                <td className="px-4 py-3.5 text-xs text-gray-400">Day {p.days}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <div className="px-5 py-3 border-t border-gray-100 bg-gray-50 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <select className="text-xs border border-gray-200 rounded px-2 py-1 bg-white text-gray-600">
-              <option>10 records</option>
-              <option>25 records</option>
-            </select>
-            <span className="text-xs text-gray-400">8 – 183 contacts shown</span>
-          </div>
-          <div className="flex items-center gap-1">
-            {[1, 2, 3, "...", 19].map((p, i) => (
-              <button key={i} className={`w-7 h-7 rounded text-xs font-medium ${p === 1 ? "bg-orange-500 text-white" : "border border-gray-200 text-gray-600 hover:bg-gray-50"}`}>{p}</button>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function SequenceView() {
-  return (
-    <div className="space-y-5">
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
-        <div className="flex items-center justify-between mb-1">
-          <p className="font-semibold text-gray-900">28-Day Multi-Channel Sequence</p>
-          <div className="flex items-center gap-2">
-            <Pill className="bg-orange-50 text-orange-700 border-orange-200">📧 6 Emails</Pill>
-            <Pill className="bg-blue-50 text-blue-700 border-blue-200">💼 2 LinkedIn</Pill>
-            <Pill className="bg-purple-50 text-purple-700 border-purple-200">🎬 1 Video</Pill>
-            <Pill className="bg-pink-50 text-pink-700 border-pink-200">🎁 1 Gift</Pill>
-          </div>
-        </div>
-        <p className="text-xs text-gray-500">Account-level pause: one reply anywhere → all sequences at that company stop instantly. Wordsmith generates every message from the contact&apos;s Profile Card.</p>
-      </div>
-
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-        <table className="w-full">
-          <thead>
-            <tr className="bg-gray-50 border-b border-gray-100">
-              {["Day", "Step", "Type", "Description"].map((h) => (
-                <th key={h} className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-5 py-3">{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-50">
-            {SEQUENCES.map((step, i) => {
-              const sc = seqColors[step.type];
-              return (
-                <tr key={i} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-5 py-4">
-                    <div className="w-10 h-10 rounded-full bg-orange-50 border-2 border-orange-200 flex items-center justify-center">
-                      <span className="text-orange-600 text-xs font-black">D{step.day}</span>
-                    </div>
-                  </td>
-                  <td className="px-5 py-4 text-sm font-semibold text-gray-900">{step.label}</td>
-                  <td className="px-5 py-4">
-                    <Pill className={`${sc.bg}`}>{sc.label}</Pill>
-                  </td>
-                  <td className="px-5 py-4 text-sm text-gray-500 max-w-sm">{step.desc}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
-
-function IntegrationsView() {
-  return (
-    <div className="space-y-5">
-      <div className="grid grid-cols-4 gap-4">
-        {[
-          { label: "Connected",   value: "1",  sub: "HubSpot Enterprise",  sub_color: "text-emerald-600" },
-          { label: "Phase 2",     value: "6",  sub: "APIs ready to wire",   sub_color: "text-blue-500" },
-          { label: "Est. Cost",   value: "$1.3K", sub: "per month Phase 2", sub_color: "text-gray-500" },
-          { label: "ROI Break-even","value":"1", sub:"deal pays 6–12 months",sub_color:"text-emerald-600" },
-        ].map((s) => (
-          <div key={s.label} className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
-            <p className="text-sm text-gray-500 mb-1">{s.label}</p>
-            <p className="text-3xl font-bold text-gray-900">{s.value}</p>
-            <p className={`text-xs mt-1.5 font-medium ${s.sub_color}`}>{s.sub}</p>
-          </div>
-        ))}
-      </div>
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-        <table className="w-full">
-          <thead>
-            <tr className="bg-gray-50 border-b border-gray-100">
-              {["Integration", "Category", "Purpose", "Status"].map((h) => (
-                <th key={h} className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wider px-5 py-3">{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-50">
-            {INTEGRATIONS.map((integ, i) => (
-              <tr key={i} className="hover:bg-gray-50 transition-colors">
-                <td className="px-5 py-4 text-sm font-semibold text-gray-900">{integ.name}</td>
-                <td className="px-5 py-4">
-                  <Pill className="bg-gray-100 text-gray-600 border-gray-200">{integ.category}</Pill>
-                </td>
-                <td className="px-5 py-4 text-sm text-gray-500">{integ.note}</td>
-                <td className="px-5 py-4">
-                  {integ.status === "active"
-                    ? <Pill className="bg-emerald-50 text-emerald-700 border-emerald-200"><StatusDot color="bg-emerald-500" />Active</Pill>
-                    : <Pill className="bg-gray-50 text-gray-500 border-gray-200"><StatusDot color="bg-gray-300" />Phase 2</Pill>
-                  }
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
-
-// ─── App ──────────────────────────────────────────────────────────────────────
-
-export default function Home() {
-  const [tab, setTab] = useState<Tab>("agents");
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-
-  const titles: Record<Tab, { title: string; sub: string }> = {
-    agents:       { title: "Agent Pipeline",   sub: "8 AI agents running the full outbound process end-to-end" },
-    prospects:    { title: "Live Prospects",   sub: "183 contacts · 47 Fortune 1000 companies · Phase 1 demo data" },
-    sequence:     { title: "Sequence Logic",   sub: "28-day multi-channel sequence generated by Wordsmith per contact" },
-    integrations: { title: "Integrations",     sub: "HubSpot Enterprise live · 6 integrations ready for Phase 2" },
-  };
-
-  const current = titles[tab];
+  const activeAgents = AGENTS.filter(a => a.status === "active" || a.status === "running").length;
+  const totalDone = AGENTS.reduce((s, a) => s + a.done, 0);
+  const totalQueue = AGENTS.reduce((s, a) => s + a.queue, 0);
 
   return (
     <div className="flex h-screen bg-gray-50 overflow-hidden">
 
       {/* ── Sidebar ── */}
-      <aside className={`${sidebarOpen ? "w-56" : "w-16"} flex-shrink-0 bg-white border-r border-gray-200 flex flex-col transition-all duration-200`}>
+      <aside className="w-56 flex-shrink-0 bg-white border-r border-gray-200 flex flex-col">
         {/* Logo */}
-        <div className="h-16 flex items-center px-4 border-b border-gray-100 justify-between">
-          {sidebarOpen && (
-            <Image src="/sociallyin-logo.png" alt="SociallyIn" width={110} height={28} className="object-contain" />
-          )}
-          <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-gray-400 hover:text-gray-600 p-1 rounded">
-            {Icon.menu("w-5 h-5")}
-          </button>
+        <div className="h-16 flex items-center px-4 border-b border-gray-100">
+          <Image src="/sociallyin-logo.png" alt="SociallyIn" width={120} height={30} className="object-contain" />
         </div>
 
         {/* Search */}
-        {sidebarOpen && (
-          <div className="px-3 pt-3 pb-1">
-            <div className="relative">
-              <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400">{Icon.search("w-3.5 h-3.5")}</span>
-              <input className="w-full pl-7 pr-3 py-1.5 text-xs border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:border-orange-300" placeholder="Search  ⌘F" />
-            </div>
+        <div className="px-3 py-3 border-b border-gray-100">
+          <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2">
+            <span className="text-gray-400">{Icons.search}</span>
+            <span className="text-xs text-gray-400">Search...</span>
+            <span className="ml-auto text-[10px] text-gray-300 font-mono bg-gray-100 px-1 rounded">⌘K</span>
           </div>
-        )}
+        </div>
 
         {/* Nav */}
         <nav className="flex-1 px-2 py-3 space-y-0.5">
-          {/* Dashboard link */}
-          <a href="#" className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-gray-500 hover:bg-gray-50 hover:text-gray-800 text-sm">
-            {Icon.dashboard("w-4 h-4 flex-shrink-0")}
-            {sidebarOpen && <span>Overview</span>}
-          </a>
-
-          {/* Active nav items */}
-          {NAV.map((n) => (
+          <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider px-3 mb-2">Pipeline</p>
+          {navItems.map(item => (
             <button
-              key={n.id}
-              onClick={() => setTab(n.id)}
-              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                tab === n.id
-                  ? "bg-orange-50 text-orange-600 border-l-[3px] border-orange-500"
-                  : "text-gray-500 hover:bg-gray-50 hover:text-gray-800"
+              key={item.id}
+              onClick={() => setTab(item.id)}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-left ${
+                tab === item.id
+                  ? "bg-orange-50 text-orange-600 border border-orange-100"
+                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
               }`}
             >
-              {n.icon("w-4 h-4 flex-shrink-0")}
-              {sidebarOpen && <span>{n.label}</span>}
+              <span className={tab === item.id ? "text-orange-500" : "text-gray-400"}>
+                {item.icon}
+              </span>
+              {item.label}
             </button>
           ))}
-
-          {/* Divider */}
-          <div className="border-t border-gray-100 my-2" />
-
-          <a href="#" className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-gray-400 hover:bg-gray-50 hover:text-gray-600 text-sm">
-            {Icon.settings("w-4 h-4 flex-shrink-0")}
-            {sidebarOpen && <span>Settings</span>}
-          </a>
-          <a href="#" className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-gray-400 hover:bg-gray-50 hover:text-gray-600 text-sm">
-            {Icon.help("w-4 h-4 flex-shrink-0")}
-            {sidebarOpen && <span>Help & Support</span>}
-          </a>
         </nav>
 
-        {/* Bottom workspace card */}
-        {sidebarOpen && (
-          <div className="p-3 border-t border-gray-100">
-            <div className="flex items-center gap-2.5 bg-gray-50 rounded-lg p-2.5 border border-gray-200">
-              <div className="w-7 h-7 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0">
-                <span className="text-white text-[10px] font-black">SI</span>
-              </div>
-              <div className="min-w-0">
-                <p className="text-xs font-semibold text-gray-800 truncate">SociallyIn</p>
-                <p className="text-[10px] text-gray-400">47 accounts · Phase 1</p>
-              </div>
-              {Icon.chevron("w-3.5 h-3.5 text-gray-400 flex-shrink-0")}
+        {/* Workspace card */}
+        <div className="px-3 py-3 border-t border-gray-100">
+          <div className="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5">
+            <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
+              <span className="text-white text-xs font-bold">K</span>
+            </div>
+            <div className="min-w-0">
+              <p className="text-xs font-semibold text-gray-800 truncate">Keith Kakadia</p>
+              <p className="text-[10px] text-gray-400">SociallyIn · Phase 1</p>
             </div>
           </div>
-        )}
+        </div>
       </aside>
 
       {/* ── Main ── */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
 
         {/* Top bar */}
         <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 flex-shrink-0">
           <div>
-            <h1 className="text-lg font-bold text-gray-900">{current.title}</h1>
+            <h1 className="text-lg font-bold text-gray-900">
+              {tab === "agents" && "Agent Pipeline"}
+              {tab === "prospects" && "Live Prospects"}
+              {tab === "sequence" && "Sequence Logic"}
+              {tab === "integrations" && "Integrations"}
+            </h1>
+            <p className="text-xs text-gray-400 mt-0.5">
+              {tab === "agents" && "8 AI agents · Fortune 1000 outbound system"}
+              {tab === "prospects" && "183 contacts · 47 companies · Phase 1 demo data"}
+              {tab === "sequence" && "28-day multi-channel sequence · Email + LinkedIn + Gift"}
+              {tab === "integrations" && "HubSpot Enterprise active · APIs connect in Phase 2"}
+            </p>
           </div>
           <div className="flex items-center gap-3">
-            {/* Metric pills */}
-            {METRICS.slice(0, 4).map((m) => (
-              <div key={m.label} className="hidden lg:flex flex-col items-end">
-                <span className={`text-sm font-bold ${m.color}`}>{m.value}</span>
-                <span className="text-[10px] text-gray-400 leading-none">{m.label}</span>
-              </div>
-            ))}
-            <div className="w-px h-6 bg-gray-200 mx-1" />
-            <button className="p-2 rounded-lg text-gray-400 hover:bg-gray-50 hover:text-gray-700">
-              {Icon.bell("w-5 h-5")}
+            <div className="flex items-center gap-1.5 text-xs text-emerald-700 font-medium bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-full">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
+              8 Agents Live
+            </div>
+            <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg">
+              {Icons.bell}
             </button>
-            <div className="flex items-center gap-2 pl-2 border-l border-gray-200">
-              <div className="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
-                <span className="text-orange-600 text-xs font-bold">KK</span>
-              </div>
-              <div className="hidden sm:block">
-                <p className="text-xs font-semibold text-gray-800">Keith Kakadia</p>
-                <p className="text-[10px] text-gray-400">SociallyIn</p>
-              </div>
+            <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center">
+              <span className="text-white text-xs font-bold">K</span>
             </div>
           </div>
         </header>
 
-        {/* Page sub-header */}
-        <div className="bg-white border-b border-gray-100 px-6 py-3 flex-shrink-0">
-          <p className="text-sm text-gray-500">{current.sub}</p>
-        </div>
-
         {/* Content */}
         <main className="flex-1 overflow-y-auto p-6">
-          {tab === "agents"       && <AgentsView />}
-          {tab === "prospects"    && <ProspectsView />}
-          {tab === "sequence"     && <SequenceView />}
-          {tab === "integrations" && <IntegrationsView />}
+
+          {/* ── AGENTS ── */}
+          {tab === "agents" && (
+            <div className="space-y-5">
+              {/* Summary cards */}
+              <div className="grid grid-cols-4 gap-4">
+                {[
+                  { label: "Total Agents", value: "8", sub: "Full pipeline coverage" },
+                  { label: "Active / Running", value: `${activeAgents}`, sub: "+2 vs idle baseline", up: true },
+                  { label: "Tasks Completed", value: totalDone.toString(), sub: "+38 this week", up: true },
+                  { label: "Queue Remaining", value: totalQueue.toString(), sub: "Across all agents" },
+                ].map(c => (
+                  <div key={c.label} className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+                    <p className="text-xs text-gray-500 font-medium">{c.label}</p>
+                    <p className="text-3xl font-bold text-gray-900 mt-1">{c.value}</p>
+                    <p className={`text-xs mt-1 font-medium ${c.up ? "text-green-600" : "text-gray-400"}`}>
+                      {c.up ? "↑ " : ""}{c.sub}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Table toolbar */}
+              <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                <div className="flex items-center justify-between px-5 py-3.5 border-b border-gray-100">
+                  <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 w-64">
+                    <span className="text-gray-400">{Icons.search}</span>
+                    <input className="bg-transparent text-sm text-gray-600 outline-none placeholder-gray-400 w-full" placeholder="Search agents..." />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button className="inline-flex items-center gap-2 text-sm font-medium text-gray-600 bg-white border border-gray-200 px-3 py-2 rounded-lg hover:bg-gray-50">
+                      {Icons.filter} Filter
+                    </button>
+                    <button className="inline-flex items-center gap-2 text-sm font-medium text-gray-600 bg-white border border-gray-200 px-3 py-2 rounded-lg hover:bg-gray-50">
+                      {Icons.sort} Sort
+                    </button>
+                    <button className="inline-flex items-center gap-2 text-sm font-medium text-gray-600 bg-white border border-gray-200 px-3 py-2 rounded-lg hover:bg-gray-50">
+                      {Icons.export} Export
+                    </button>
+                  </div>
+                </div>
+
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-gray-100 bg-gray-50">
+                      <th className="w-10 px-5 py-3"><input type="checkbox" className="rounded border-gray-300" /></th>
+                      {["Agent", "Role", "Status", "Tasks Done", "Queue", "Description"].map(h => (
+                        <th key={h} className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide px-4 py-3">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-50">
+                    {AGENTS.map((a, i) => (
+                      <tr key={a.name} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-5 py-3.5"><input type="checkbox" className="rounded border-gray-300" /></td>
+                        <td className="px-4 py-3.5">
+                          <div>
+                            <p className="text-sm font-semibold text-gray-900">{a.name}</p>
+                            <p className="text-xs text-gray-400">Agent #{i + 1}</p>
+                          </div>
+                        </td>
+                        <td className="px-4 py-3.5 text-sm text-gray-600">{a.role}</td>
+                        <td className="px-4 py-3.5">{statusBadge(a.status)}</td>
+                        <td className="px-4 py-3.5">
+                          <div className="flex items-center gap-2">
+                            <div className="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                              <div className="h-full bg-orange-400 rounded-full" style={{ width: `${Math.min(100, (a.done / 200) * 100)}%` }} />
+                            </div>
+                            <span className="text-sm font-semibold text-gray-800">{a.done}</span>
+                          </div>
+                        </td>
+                        <td className="px-4 py-3.5">
+                          <span className={`text-sm font-semibold ${a.queue > 0 ? "text-orange-600" : "text-green-600"}`}>{a.queue}</span>
+                        </td>
+                        <td className="px-4 py-3.5 text-xs text-gray-500 max-w-xs">{a.desc}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+
+                <div className="flex items-center justify-between px-5 py-3 border-t border-gray-100 bg-gray-50">
+                  <div className="flex items-center gap-2">
+                    <select className="text-xs text-gray-600 bg-white border border-gray-200 rounded px-2 py-1">
+                      <option>10 records</option>
+                      <option>25 records</option>
+                    </select>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    {[1].map(n => (
+                      <button key={n} className="w-7 h-7 text-xs font-medium rounded bg-orange-500 text-white">{n}</button>
+                    ))}
+                  </div>
+                  <p className="text-xs text-gray-400">Showing 1 – 8 of 8</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ── PROSPECTS ── */}
+          {tab === "prospects" && (
+            <div className="space-y-5">
+              <div className="grid grid-cols-4 gap-4">
+                {[
+                  { label: "Companies Targeted", value: "47", sub: "+12 this week", up: true },
+                  { label: "Contacts Mapped", value: "183", sub: "+38 this week", up: true },
+                  { label: "In Active Sequence", value: "62", sub: "34% of pipeline", up: true },
+                  { label: "Meetings Booked", value: "3", sub: "17.7% reply rate", up: true },
+                ].map(c => (
+                  <div key={c.label} className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+                    <p className="text-xs text-gray-500 font-medium">{c.label}</p>
+                    <p className="text-3xl font-bold text-gray-900 mt-1">{c.value}</p>
+                    <p className="text-xs mt-1 font-medium text-green-600">↑ {c.sub}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                <div className="flex items-center justify-between px-5 py-3.5 border-b border-gray-100">
+                  <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 w-64">
+                    <span className="text-gray-400">{Icons.search}</span>
+                    <input className="bg-transparent text-sm text-gray-600 outline-none placeholder-gray-400 w-full" placeholder="Search prospects..." />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button className="inline-flex items-center gap-2 text-sm font-medium text-gray-600 bg-white border border-gray-200 px-3 py-2 rounded-lg hover:bg-gray-50">{Icons.filter} Filter</button>
+                    <button className="inline-flex items-center gap-2 text-sm font-medium text-gray-600 bg-white border border-gray-200 px-3 py-2 rounded-lg hover:bg-gray-50">{Icons.sort} Sort</button>
+                    <button className="inline-flex items-center gap-2 text-sm font-medium text-white bg-orange-500 border border-orange-500 px-3 py-2 rounded-lg hover:bg-orange-600">{Icons.export} Export CSV</button>
+                  </div>
+                </div>
+
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-gray-100 bg-gray-50">
+                      <th className="w-10 px-5 py-3"><input type="checkbox" className="rounded border-gray-300" /></th>
+                      {["Company", "Contact", "Job Title", "Tier", "ICP Score", "Stage", "Channel"].map(h => (
+                        <th key={h} className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide px-4 py-3">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-50">
+                    {PROSPECTS.map((p, i) => (
+                      <tr key={i} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-5 py-3.5"><input type="checkbox" className="rounded border-gray-300" /></td>
+                        <td className="px-4 py-3.5">
+                          <p className="text-sm font-semibold text-gray-900">{p.company}</p>
+                        </td>
+                        <td className="px-4 py-3.5">
+                          <div className="flex items-center gap-2">
+                            <div className="w-7 h-7 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center flex-shrink-0">
+                              <span className="text-white text-xs font-bold">{p.contact.split(" ").map(n => n[0]).join("")}</span>
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium text-gray-800">{p.contact}</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-4 py-3.5 text-xs text-gray-500">{p.title}</td>
+                        <td className="px-4 py-3.5">{tierBadge(p.tier)}</td>
+                        <td className="px-4 py-3.5">
+                          <div className="flex items-center gap-2">
+                            <div className="w-14 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                              <div className="h-full bg-orange-400 rounded-full" style={{ width: `${p.score}%` }} />
+                            </div>
+                            <span className="text-sm font-bold text-gray-800">{p.score}</span>
+                          </div>
+                        </td>
+                        <td className="px-4 py-3.5">{stageBadge(p.stage)}</td>
+                        <td className="px-4 py-3.5 text-sm text-gray-500">{p.channel}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+
+                <div className="flex items-center justify-between px-5 py-3 border-t border-gray-100 bg-gray-50">
+                  <div className="flex items-center gap-2">
+                    <select className="text-xs text-gray-600 bg-white border border-gray-200 rounded px-2 py-1"><option>10 records</option></select>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <button className="w-7 h-7 text-xs rounded bg-orange-500 text-white font-medium">1</button>
+                    <button className="w-7 h-7 text-xs rounded text-gray-600 hover:bg-gray-100">2</button>
+                    <button className="w-7 h-7 text-xs rounded text-gray-600 hover:bg-gray-100">...</button>
+                    <button className="w-7 h-7 text-xs rounded text-gray-600 hover:bg-gray-100">19</button>
+                  </div>
+                  <p className="text-xs text-gray-400">Showing 1 – 8 of 183</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ── SEQUENCE ── */}
+          {tab === "sequence" && (
+            <div className="space-y-5">
+              <div className="grid grid-cols-4 gap-4">
+                {[
+                  { label: "Sequence Length", value: "28", sub: "days total" },
+                  { label: "Total Touchpoints", value: "9", sub: "email + LinkedIn + gift" },
+                  { label: "Avg Reply Rate", value: "17.7%", sub: "Industry avg: 3-5%", up: true },
+                  { label: "Meetings / 100", value: "1.6", sub: "+0.8 vs cold email only", up: true },
+                ].map(c => (
+                  <div key={c.label} className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+                    <p className="text-xs text-gray-500 font-medium">{c.label}</p>
+                    <p className="text-3xl font-bold text-gray-900 mt-1">{c.value}</p>
+                    <p className={`text-xs mt-1 font-medium ${c.up ? "text-green-600" : "text-gray-400"}`}>{c.up ? "↑ " : ""}{c.sub}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                <div className="px-5 py-3.5 border-b border-gray-100 bg-gray-50">
+                  <p className="text-sm font-semibold text-gray-700">28-Day Sequence Timeline</p>
+                  <p className="text-xs text-gray-400 mt-0.5">Account-level pause: one reply anywhere → all sequences at that company stop instantly</p>
+                </div>
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-gray-100 bg-gray-50">
+                      {["Day", "Step", "Type", "Description"].map(h => (
+                        <th key={h} className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide px-5 py-3">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-50">
+                    {SEQUENCES.map((s) => (
+                      <tr key={s.day} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-5 py-3.5">
+                          <span className="inline-flex items-center justify-center w-9 h-9 rounded-full border-2 border-orange-200 text-orange-600 text-xs font-bold bg-orange-50">D{s.day}</span>
+                        </td>
+                        <td className="px-5 py-3.5 text-sm font-semibold text-gray-900">{s.label}</td>
+                        <td className="px-5 py-3.5">
+                          <span className={`inline-flex items-center text-xs font-semibold px-2 py-0.5 rounded-full text-white ${seqColors[s.type]}`}>
+                            {seqLabels[s.type]}
+                          </span>
+                        </td>
+                        <td className="px-5 py-3.5 text-sm text-gray-500 max-w-md">{s.desc}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* ── INTEGRATIONS ── */}
+          {tab === "integrations" && (
+            <div className="space-y-5">
+              <div className="grid grid-cols-4 gap-4">
+                {[
+                  { label: "Active Integrations", value: "1", sub: "HubSpot Enterprise" },
+                  { label: "Planned — Phase 2", value: "7", sub: "APIs ready to connect" },
+                  { label: "Est. Monthly Cost", value: "$950–$1.6K", sub: "One deal pays 6–12 months", up: true },
+                  { label: "HubSpot Contacts", value: "183", sub: "Synced in real-time", up: true },
+                ].map(c => (
+                  <div key={c.label} className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+                    <p className="text-xs text-gray-500 font-medium">{c.label}</p>
+                    <p className="text-2xl font-bold text-gray-900 mt-1">{c.value}</p>
+                    <p className={`text-xs mt-1 font-medium ${c.up ? "text-green-600" : "text-gray-400"}`}>{c.up ? "↑ " : ""}{c.sub}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                <div className="px-5 py-3.5 border-b border-gray-100 bg-gray-50">
+                  <p className="text-sm font-semibold text-gray-700">Integration Stack</p>
+                  <p className="text-xs text-gray-400 mt-0.5">Layered on top of SociallyIn&apos;s existing HubSpot Enterprise. Real connections activate in Phase 2.</p>
+                </div>
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-gray-100 bg-gray-50">
+                      {["Platform", "Purpose", "Status"].map(h => (
+                        <th key={h} className="text-left text-xs font-semibold text-gray-500 uppercase tracking-wide px-5 py-3">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-50">
+                    {INTEGRATIONS.map(integ => (
+                      <tr key={integ.name} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-5 py-3.5 text-sm font-semibold text-gray-900">{integ.name}</td>
+                        <td className="px-5 py-3.5 text-sm text-gray-500">{integ.note}</td>
+                        <td className="px-5 py-3.5">
+                          {integ.status === "active"
+                            ? <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-200"><span className="text-green-500">{Icons.check}</span> Active</span>
+                            : <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 border border-gray-200">Phase 2</span>
+                          }
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
         </main>
       </div>
-
     </div>
   );
 }
